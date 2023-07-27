@@ -9,9 +9,9 @@ import { Transition } from '@headlessui/react'
 import Particles from './particles'
 import Illustration from '@/public/images/glow-top.svg'
 import { HighlighterItem } from './highlighter'
-// import CodeImage from "@/public/show_api_feature_15fps.gif"
-// import RocketgraphDashboard from "@/public/rocketgraph_dashboard.gif"
-// import HasuraDashboard from "@/public/hasura_console.gif"
+import CodeImage from "@/public/code_showcase_15fps.gif"
+import RocketgraphDashboard from "@/public/rocketgraph_dashboard_15fps.gif"
+import HasuraDashboard from "@/public/hasura_dashboard_showcase_15fps.gif"
 import { motion } from "framer-motion"
 
 export default function Features() {
@@ -71,7 +71,7 @@ export default function Features() {
               </div>
 
               {/* Box #2 */}
-              {/* {
+              {
                 tab == 1 ?
                 <div className="md:col-span-7 pt-16" data-aos="fade-down">
                   <HighlighterItem>
@@ -112,7 +112,7 @@ export default function Features() {
                     /> 
                   </HighlighterItem>
                 </div> : null
-              } */}
+              }
             </div>
 
 
