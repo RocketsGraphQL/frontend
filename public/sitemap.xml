@@ -1,0 +1,24 @@
+<xml version="1.0" encoding="UTF-8">
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+        <url>
+            <loc>https://rocketgraph.io</loc>
+            <lastmod>2021-06-01</lastmod>
+        </url>
+        <url>
+            <loc>https://blog.rocketgraph.io</loc>
+            <lastmod>2021-06-01</lastmod>
+        </url>
+        <url>
+            <loc>https://docs.rocketgraph.io</loc>
+            <lastmod>2021-06-01</lastmod>
+        </url>
+        <url>
+            <loc>https://rocketgraph.io/pricing</loc>
+            <lastmod>2021-06-01</lastmod>
+        </url>
+        <url>
+            <loc>https://rocketgraph.io/dashboard</loc>
+            <lastmod>2021-06-01</lastmod>
+        </url>
+    </urlset>
+</xml>
