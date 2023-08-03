@@ -55,7 +55,7 @@ export default function Footer() {
                 <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="https://github.com/RocketsGraphQL/rgraph/tree/master/example-setups">Integrations</a>
               </li>
               <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Changelog</a>
+                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="https://github.com/RocketsGraphQL/rgraph/releases/tag/v0.2-stable">Changelog</a>
               </li>
             </ul>
           </div>
@@ -65,7 +65,7 @@ export default function Footer() {
             <h6 className="text-sm text-slate-50 font-medium mb-2">Company</h6>
             <ul className="text-sm space-y-2">
               <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">About us</a>
+                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="https://discord.gg/btVg7aGK">About us</a>
               </li>
               <li>
                 <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="https://blog.rocketgraph.io/">Blog</a>
@@ -81,7 +81,7 @@ export default function Footer() {
                 <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="https://discord.gg/btVg7aGK">Community</a>
               </li>
               <li>
-                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="#0">Report a vulnerability</a>
+                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="https://github.com/RocketsGraphQL/rgraph/issues">Report a vulnerability</a>
               </li>
             </ul>
           </div>
