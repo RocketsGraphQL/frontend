@@ -7,6 +7,180 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { faClipboard, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import React from "react";
+import CodeMirror from "@uiw/react-codemirror";
+import { javascript } from "@codemirror/lang-javascript";
+import axios from 'axios';
+import Cookies from 'js-cookie';
+
+
+const logs_sample = [
+  [
+    {
+      "Field": "@timestamp",
+      "Value": "2023-08-10 08:47:15.000"
+    },
+    {
+      "Field": "@message",
+      "Value": "2023-08-10 08:47:15 UTC:172.31.1.50(44986):postgres@postgres:[12726]:LOG:  AUDIT: SESSION,116,1,MISC,COMMIT,,,COMMIT,<not logged>"
+    },
+    {
+      "Field": "@ptr",
+      "Value": "CngKOwo3NTY5NzI1MDk3MTY5Oi9hd3MvcmRzL2luc3RhbmNlL3dpdGhlcmVkLWZyb2cvcG9zdGdyZXNxbBADEjUaGAIGSjSx9AAAAAHIMJ4iAAZNSjigAAAAQiABKPiq/PSdMTC41IP1nTE4NUCDZUiyDlDgChgAIAEQNBgB"
+    }
+  ],
+  [
+    {
+      "Field": "@timestamp",
+      "Value": "2023-08-10 08:47:15.000"
+    },
+    {
+      "Field": "@message",
+      "Value": "2023-08-10 08:47:15 UTC:172.31.1.50(44986):postgres@postgres:[12726]:LOG:  AUDIT: SESSION,115,1,READ,SELECT,,,\"\n\t       SELECT resource_version from hdb_catalog.hdb_metadata\n\t    \",<not logged>"
+    },
+    {
+      "Field": "@ptr",
+      "Value": "CngKOwo3NTY5NzI1MDk3MTY5Oi9hd3MvcmRzL2luc3RhbmNlL3dpdGhlcmVkLWZyb2cvcG9zdGdyZXNxbBADEjUaGAIGSjSx9AAAAAHIMJ4iAAZNSjigAAAAQiABKPiq/PSdMTC41IP1nTE4NUCDZUiyDlDgChgAIAEQMxgB"
+    }
+  ],
+  [
+    {
+      "Field": "@timestamp",
+      "Value": "2023-08-10 08:47:15.000"
+    },
+    {
+      "Field": "@message",
+      "Value": "2023-08-10 08:47:15 UTC:172.31.1.50(44986):postgres@postgres:[12726]:LOG:  AUDIT: SESSION,114,1,MISC,BEGIN,,,BEGIN ISOLATION LEVEL REPEATABLE READ ,<not logged>"
+    },
+    {
+      "Field": "@ptr",
+      "Value": "CngKOwo3NTY5NzI1MDk3MTY5Oi9hd3MvcmRzL2luc3RhbmNlL3dpdGhlcmVkLWZyb2cvcG9zdGdyZXNxbBADEjUaGAIGSjSx9AAAAAHIMJ4iAAZNSjigAAAAQiABKPiq/PSdMTC41IP1nTE4NUCDZUiyDlDgChgAIAEQMhgB"
+    }
+  ],
+];
+
+export function CodeMirrorComponent() {
+  const defaultQuery = "fields @timestamp, @message | limit 200"
+  const [query, setQuery] = useState(defaultQuery)
+  const [logs, setLogs] = useState([])
+  const onChange = React.useCallback((value: any, viewUpdate: any) => {
+    console.log("value:", value);
+    setQuery(value);
+  }, []);
+  const runQuery = async () => {
+    const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const jwt = Cookies.get("jwt")
+    const logs_result = await axios.post(`${API_URL}/logs`, 
+    {
+      Query: query
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    }
+    )
+    setLogs(logs_result.data.Output.Results)
+    console.log("logs: ", logs_result.data.Output.Results);
+  }
+  return (
+    <div>
+      <button className="btn text-sm text-white bg-purple-500 hover:bg-purple-600 w-full shadow-sm group mb-6" onClick={() => runQuery()}>
+        RUN Query <span className="tracking-normal text-purple-300 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
+      </button>
+      <CodeMirror
+        value={defaultQuery}
+        height="200px"
+        theme="dark"
+        // extensions={[javascript({ jsx: true })]}
+        onChange={onChange}
+      />
+      {LogsTable(logs) }
+      {/* <CodeMirror
+        value="console.log('hello world!');"
+        height="200px"
+        extensions={[javascript({ jsx: true })]}
+        onChange={(value, viewUpdate) => {
+          console.log("value:", value);
+        }}
+      /> */}
+    </div>
+  );
+}
+
+const LogsTable = (logs: any) => {
+  if (typeof logs == undefined || logs.length == 0) {
+    return;
+  }
+  return (
+    <>
+      <div className="bg-dark-mode-bg min-h-screen pt-20">
+        <div className="relative overflow-x-auto rounded-md pt-20 overflow-y-scroll table-container">
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-gray-900 uppercase dark:text-gray-400">
+                    <tr className="commits-table-bg border-b">
+                        <th scope="col" className="px-6 py-3">
+                            Log Time
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Log Message
+                        </th>
+                        <th scope="col" className="px-6 py-3 overflow-hidden">
+                            Log Id
+                        </th>
+                    </tr>
+                </thead>
+                <tbody className="commits-table-bg height-fixed">
+                  {
+                    logs.map((records: any) => {
+                      // const date = moment(commit.timestamp).fromNow();
+                      return (
+                        <>
+
+                            <tr className="border-b dark:bg-gray-800 dark:border-gray-700">
+                            {
+                              records.map((record: any) => {
+                                console.log(record, record["Value"]);
+                                if (record["Field"] == "@ptr") {
+                                  return (
+                                    <td className="px-6 py-4">
+                                      {record["Value"].substring(0, 7)}
+                                    </td>
+                                  )                                    
+                                } 
+                                else if (record["Field"] == "@message") {
+                                  const main_message = record["Value"].split(":LOG:")[1]
+                                  console.log("main msg: ", main_message);
+                                  return (
+                                    <td className="px-6 py-4">
+                                      {main_message}
+                                    </td>                                    
+                                  )
+                                } 
+                                else {
+                                  return (
+                                    <td className="px-6 py-4">
+                                      {record["Value"]}
+                                    </td>
+                                  )
+                                }
+
+
+                              })
+                            }
+                            </tr>
+
+                        </>
+                      )
+                    })
+                  }
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </>
+  )
+}
 
 
 const GET_PROJECTS = (pid: String) => gql`
@@ -120,6 +294,9 @@ const BackendDetails = (project: any, isBackendURLCopied: boolean, setIsBackendU
                     </tbody>
                   )}
                 </table>
+            </div>
+            <div className='pt-10'>
+              <CodeMirrorComponent />
             </div>
         </div>
         </>

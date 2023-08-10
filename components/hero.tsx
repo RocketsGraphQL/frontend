@@ -38,9 +38,9 @@ export default function Hero() {
             </div> */}
             <div className="mb-6" data-aos="fade-down">
               <div className="inline-flex relative before:absolute before:inset-0 before:bg-purple-500 before:blur-md">
-                <a className="btn-sm py-0.5 text-slate-300 hover:text-white transition duration-150 ease-in-out group [background:linear-gradient(theme(colors.purple.500),_theme(colors.purple.500))_padding-box,_linear-gradient(theme(colors.purple.500),_theme(colors.purple.200)_75%,_theme(colors.transparent)_100%)_border-box] relative before:absolute before:inset-0 before:bg-slate-800/50 before:rounded-full before:pointer-events-none shadow" href="https://blog.rocketgraph.io/posts/messaging-app">
+                <a className="btn-sm py-0.5 text-slate-300 hover:text-white transition duration-150 ease-in-out group [background:linear-gradient(theme(colors.purple.500),_theme(colors.purple.500))_padding-box,_linear-gradient(theme(colors.purple.500),_theme(colors.purple.200)_75%,_theme(colors.transparent)_100%)_border-box] relative before:absolute before:inset-0 before:bg-slate-800/50 before:rounded-full before:pointer-events-none shadow" href="https://github.com/RocketsGraphQL/rgraph/releases/tag/v0.2-stable">
                   <span className="relative inline-flex items-center">
-                    Checkout the new blog on how to build a messaging app using Chakra UI<span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
+                    Checkout the v0.2.0 stable release <span className="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
                   </span>
                 </a>
               </div>
@@ -76,7 +76,7 @@ export default function Hero() {
           </div>
 
           {/* Box #2 */}
-          <div className="md:col-span-7 pt-16" data-aos="fade-down">
+          <div className="hidden md:block md:col-span-7 pt-16" data-aos="fade-down">
             <HighlighterItem>
               <Image
                 src={CodeImage}
