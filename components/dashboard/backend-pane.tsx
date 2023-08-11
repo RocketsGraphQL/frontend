@@ -135,6 +135,7 @@ export function CodeMirrorComponent() {
         }
       </button>
       <CodeMirror
+        className='pb-20'
         value={defaultQuery}
         height="200px"
         theme="dark"
@@ -181,12 +182,23 @@ const LogsTableNew = (logs: any) => {
                         {
                           record.map((cell: any) => {
                             if (cell["Field"] == "@timestamp") {
+                              const dateObj = new Date(cell["Value"]);
+                              const humanReadable = dateObj.toUTCString();
                               return (
                                 <th scope="row" className="px-6 py-4 font-medium overflow-hidden text-gray-900 whitespace-nowrap dark:text-white">
-                                  {cell["Value"]}
+                                  {humanReadable}
                                 </th>
                               )
-                            } else {
+                            } else if (cell["Field"] == "@message") {
+                              const messageSplit = cell["Value"].split(":LOG:")
+                              const value = messageSplit[1]
+                              return (
+                                <td className="px-6 py-4 overflow-hidden">
+                                  {value}
+                                </td>
+                              )
+                            } 
+                            else {
                               return (
                                 <td className="px-6 py-4 overflow-hidden">
                                   {cell["Value"]}
