@@ -59,6 +59,36 @@ const logs_sample = [
   ],
 ];
 
+const constructTableHeaderFromFirstRow =  (row: any) => {
+  return (
+      <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
+          <tr>
+              {
+                row.map((cell: any, index: number) => {
+                  console.log("index, cell: ", index, cell)
+                  const columnName = cell["Field"].replace("@", "")
+                  return (
+                    <th key={index} scope="col" className="px-6 py-3">
+                      {columnName}
+                    </th>
+                  )
+                })
+              }
+              {/* <th key={row.length + 1} scope="col" className="px-6 py-3">
+                  user
+              </th>
+              <th key={row.length + 2} scope="col" className="px-6 py-3">
+                  ip
+              </th> */}
+              {/* <th scope="col" className="px-6 py-3">
+                  Price
+              </th> */}
+          </tr>
+      </thead>
+  )
+}
+
+
 export function CodeMirrorComponent() {
   const defaultQuery = "fields @timestamp, @message | limit 200"
   const [query, setQuery] = useState(defaultQuery)
@@ -111,7 +141,7 @@ export function CodeMirrorComponent() {
         // extensions={[javascript({ jsx: true })]}
         onChange={onChange}
       />
-      {LogsTable(logs) }
+      {LogsTableNew(logs_sample) }
       {/* <CodeMirror
         value="console.log('hello world!');"
         height="200px"
@@ -124,6 +154,228 @@ export function CodeMirrorComponent() {
   );
 }
 
+const LogsTableNew = (logs: any) => {
+  if (!logs.length) {
+    return;
+  }
+  return (
+    <>
+
+<div className="relative overflow-x-auto table-container">
+    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
+        {constructTableHeaderFromFirstRow(logs[0])}
+        <tbody>
+            {
+              logs.map((record: any, index: number) => {
+                let value;
+                console.log("record:", record);
+                if (record["Field"] == "@message") {
+                  const message = record["Value"].split(":LOG:")
+                  value = message[1]
+                } else {
+                  value = record["Value"]
+                }
+                console.log(value);
+                return (
+                  <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        {
+                          record.map((cell: any) => {
+                            if (cell["Field"] == "@timestamp") {
+                              return (
+                                <th scope="row" className="px-6 py-4 font-medium overflow-hidden text-gray-900 whitespace-nowrap dark:text-white">
+                                  {cell["Value"]}
+                                </th>
+                              )
+                            } else {
+                              return (
+                                <td className="px-6 py-4 overflow-hidden">
+                                  {cell["Value"]}
+                                </td>
+                              )
+                            }
+                          })
+                        }
+                  </tr>
+                )
+              })
+            }
+        </tbody>
+    </table>
+</div>
+
+    </>
+  )
+}
+
+const LogsTableTest = (logs: any) => {
+  return (
+    <>
+
+<div className="relative overflow-x-auto table-container">
+    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
+            <tr>
+                <th scope="col" className="px-6 py-3">
+                    Product name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    Color
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    Category
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    Price
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Apple MacBook Pro 17"
+                </th>
+                <td className="px-6 py-4">
+                    Silver
+                </td>
+                <td className="px-6 py-4">
+                    Laptop
+                </td>
+                <td className="px-6 py-4">
+                    $2999
+                </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Microsoft Surface Pro
+                </th>
+                <td className="px-6 py-4">
+                    White
+                </td>
+                <td className="px-6 py-4 overflow-hidden">
+                CngKOwo3NTY5NzI1MDk3MTY5Oi9hd3MvcmRzL2luc3RhbmNlL3dpdGhlcmVkLWZyb2cvcG9zdGdyZXNxbBADEjUaGAIGSjSx9AAAAAHIMJ4iAAZNSjigAAAAQiABKPiq                </td>
+                <td className="px-6 py-4">
+                    $1999
+                </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Microsoft Surface Pro
+                </th>
+                <td className="px-6 py-4">
+                    White
+                </td>
+                <td className="px-6 py-4">
+                    Laptop PC
+                </td>
+                <td className="px-6 py-4">
+                    $1999
+                </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Microsoft Surface Pro
+                </th>
+                <td className="px-6 py-4">
+                    White
+                </td>
+                <td className="px-6 py-4">
+                    Laptop PC
+                </td>
+                <td className="px-6 py-4">
+                    $1999
+                </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Microsoft Surface Pro
+                </th>
+                <td className="px-6 py-4">
+                    White
+                </td>
+                <td className="px-6 py-4">
+                    Laptop PC
+                </td>
+                <td className="px-6 py-4">
+                    $1999
+                </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Microsoft Surface Pro
+                </th>
+                <td className="px-6 py-4">
+                    White
+                </td>
+                <td className="px-6 py-4">
+                    Laptop PC
+                </td>
+                <td className="px-6 py-4">
+                    $1999
+                </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Microsoft Surface Pro
+                </th>
+                <td className="px-6 py-4">
+                    White
+                </td>
+                <td className="px-6 py-4">
+                    Laptop PC
+                </td>
+                <td className="px-6 py-4">
+                    $1999
+                </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Microsoft Surface Pro
+                </th>
+                <td className="px-6 py-4">
+                    White
+                </td>
+                <td className="px-6 py-4">
+                    Laptop PC
+                </td>
+                <td className="px-6 py-4">
+                    $1999
+                </td>
+            </tr>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Microsoft Surface Pro
+                </th>
+                <td className="px-6 py-4">
+                    White
+                </td>
+                <td className="px-6 py-4">
+                    Laptop PC
+                </td>
+                <td className="px-6 py-4">
+                    $1999
+                </td>
+            </tr>
+            <tr className="bg-white dark:bg-gray-800">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Magic Mouse 2
+                </th>
+                <td className="px-6 py-4">
+                    Black
+                </td>
+                <td className="px-6 py-4">
+                    Accessories
+                </td>
+                <td className="px-6 py-4">
+                    $99
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+    </>
+  )
+}
 const LogsTable = (logs: any) => {
   if (typeof logs == undefined || logs.length == 0) {
     return;
@@ -132,7 +384,7 @@ const LogsTable = (logs: any) => {
     <>
       <div className="bg-dark-mode-bg min-h-screen pt-20">
         <div className="relative overflow-x-auto rounded-md pt-20 overflow-y-scroll table-container">
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
                 <thead className="text-xs text-gray-900 uppercase dark:text-gray-400">
                     <tr className="commits-table-bg border-b">
                         <th scope="col" className="px-6 py-3">
