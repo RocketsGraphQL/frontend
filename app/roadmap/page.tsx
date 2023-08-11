@@ -339,6 +339,18 @@ export const metadata = {
                                 <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0 2C4.477 20 0 15.523 0 10S4.477 0 10 0s10 4.477 10 10-4.477 10-10 10z" />
                               </svg>
                             </div>
+                            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 pl-9">OpenAI kill switch</h3>
+                          </div>
+                          <div className="pl-9">Kill your OpenAI API keys when you exceed usage limits. set hard limits on your OpenAI usage</div>
+                        </li>
+                        {/* List item */}
+                        <li className="relative py-2">
+                          <div className="flex items-center mb-1">
+                            <div className="absolute left-0 rounded-full bg-white dark:bg-slate-900" aria-hidden="true">
+                              <svg className="w-5 h-5 fill-current text-slate-400 dark:text-slate-500" viewBox="0 0 20 20">
+                                <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0 2C4.477 20 0 15.523 0 10S4.477 0 10 0s10 4.477 10 10-4.477 10-10 10z" />
+                              </svg>
+                            </div>
                             <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 pl-9">Full blown AI studio</h3>
                           </div>
                           <div className="pl-9">Create chatbots for your website based on your Postgres data. Build complex machine learning models on a pay-as-you-go plan.</div>

@@ -14,6 +14,10 @@ module.exports = {
         "aqua-brand": "#00CED1",
         "brand-900": "#3fcf8e",
         "brand-800": "#6ee7b7",
+        "forest-green": "#228b22",
+        "lighter-green": "#227b22",
+        "yellow-900": "#ffd700",
+        "yellow-brand": "#fecc1b",
       },
       fontFamily: {
         inter: ['var(--font-inter)', 'sans-serif'],

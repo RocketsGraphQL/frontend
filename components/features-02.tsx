@@ -134,7 +134,7 @@ export default function Features02() {
                 </svg>
                 <h4 className="font-medium text-slate-50">Authorization</h4>
               </div>
-              <p className="text-sm text-slate-400">Login box must find the right balance for the user convenience, privacy and security.</p>
+              <p className="text-sm text-slate-400">Add granular level authorization rules on your Postgres data using our Hasura console.</p>
             </div>
             {/* Feature */}
             <div>
@@ -154,7 +154,7 @@ export default function Features02() {
                 </svg>
                 <h4 className="font-medium text-slate-50">Lambda functions</h4>
               </div>
-              <p className="text-sm text-slate-400">Login box must find the right balance for the user convenience, privacy and security.</p>
+              <p className="text-sm text-slate-400">Connect your Github repository and our Github bot will pick up the latest commits automatically, compile them in a sandbox and deploy them as thin Lambdas.</p>
             </div>
           </div>
 

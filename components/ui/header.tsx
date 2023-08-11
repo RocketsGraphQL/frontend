@@ -26,7 +26,7 @@ export default function Header() {
                 className="mr-12 relative cursor-pointer inline-flex items-center space-x-2 text-center font-regular transition ease-out duration-200 rounded outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1   text-scale-1200 hover:bg-scale-300 shadow-none focus-visible:outline-scale-700  text-xs px-2.5 py-1 group hidden lg:flex"
               >
                 <div className="text-brand-800 flex h-4 w-4 items-center justify-center">
-                  <div className="text-scale-900 flex h-3 w-3 items-center justify-center transition-all group-hover:h-4 group-hover:w-4 group-hover:text-yellow-900 group-focus:h-4 group-focus:w-4 group-focus:text-yellow-900">
+                  <div className="text-scale-900 flex h-3 w-3 items-center justify-center transition-all group-hover:h-4 group-hover:w-4 group-hover:text-forest-green group-focus:h-4 group-focus:w-4 group-focus:text-yellow-900">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="14"

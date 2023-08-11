@@ -4,7 +4,7 @@ import { gql, useSubscription } from '@apollo/client';
 import Link from 'next/link'
 import { useState } from 'react';
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { faClipboard, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faClipboard, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import React from "react";
@@ -63,14 +63,16 @@ export function CodeMirrorComponent() {
   const defaultQuery = "fields @timestamp, @message | limit 200"
   const [query, setQuery] = useState(defaultQuery)
   const [logs, setLogs] = useState([])
+  const [processing, setProcessing] = useState(false)
+  const [error, setError] = useState(false)
   const onChange = React.useCallback((value: any, viewUpdate: any) => {
-    console.log("value:", value);
     setQuery(value);
   }, []);
   const runQuery = async () => {
     const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
     const jwt = Cookies.get("jwt")
-    const logs_result = await axios.post(`${API_URL}/logs`, 
+    setProcessing(true)
+    const logsResult = await axios.post(`${API_URL}/logs`, 
     {
       Query: query
     },
@@ -80,13 +82,27 @@ export function CodeMirrorComponent() {
       },
     }
     )
-    setLogs(logs_result.data.Output.Results)
-    console.log("logs: ", logs_result.data.Output.Results);
+    setProcessing(false)
+    if (logsResult.status === 200 && logsResult.data) {
+      setLogs(logsResult.data.Output.Results)
+    } else {
+      setError(true)
+    }
+    console.log("logs: ", logsResult.data.Output.Results);
   }
   return (
     <div>
-      <button className="btn text-sm text-white bg-purple-500 hover:bg-purple-600 w-full shadow-sm group mb-6" onClick={() => runQuery()}>
-        RUN Query <span className="tracking-normal text-purple-300 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
+      <button className="p-2 bg-forest-green hover:bg-lighter-green mb-6" onClick={() => runQuery()}>
+        {
+          processing ?
+          "Processing  "
+          : "RUN Query"
+        }
+        {
+          processing ?
+          <FontAwesomeIcon icon={faSpinner} spin />
+          : null
+        }
       </button>
       <CodeMirror
         value={defaultQuery}
