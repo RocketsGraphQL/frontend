@@ -65,7 +65,6 @@ const constructTableHeaderFromFirstRow =  (row: any) => {
           <tr>
               {
                 row.map((cell: any, index: number) => {
-                  console.log("index, cell: ", index, cell)
                   const columnName = cell["Field"].replace("@", "")
                   return (
                     <th key={index} scope="col" className="px-6 py-3">
@@ -169,14 +168,12 @@ const LogsTableNew = (logs: any) => {
             {
               logs.map((record: any, index: number) => {
                 let value;
-                console.log("record:", record);
                 if (record["Field"] == "@message") {
                   const message = record["Value"].split(":LOG:")
                   value = message[1]
                 } else {
                   value = record["Value"]
                 }
-                console.log(value);
                 return (
                   <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         {
@@ -420,7 +417,6 @@ const LogsTable = (logs: any) => {
                             <tr className="border-b dark:bg-gray-800 dark:border-gray-700">
                             {
                               records.map((record: any) => {
-                                console.log(record, record["Value"]);
                                 if (record["Field"] == "@ptr") {
                                   return (
                                     <td className="px-6 py-4">
@@ -430,7 +426,6 @@ const LogsTable = (logs: any) => {
                                 } 
                                 else if (record["Field"] == "@message") {
                                   const main_message = record["Value"].split(":LOG:")[1]
-                                  console.log("main msg: ", main_message);
                                   return (
                                     <td className="px-6 py-4">
                                       {main_message}
