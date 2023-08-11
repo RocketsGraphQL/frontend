@@ -141,7 +141,7 @@ export function CodeMirrorComponent() {
         // extensions={[javascript({ jsx: true })]}
         onChange={onChange}
       />
-      {LogsTableNew(logs_sample) }
+      {LogsTableNew(logs) }
       {/* <CodeMirror
         value="console.log('hello world!');"
         height="200px"
