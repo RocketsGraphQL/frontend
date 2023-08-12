@@ -12,6 +12,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import moment from 'moment';
 
 
 const logs_sample = [
@@ -87,31 +88,31 @@ const constructTableHeaderFromFirstRow =  (row: any) => {
   )
 }
 
-const TimeFrameSelectionRadioGroup = () => {
+const TimeFrameSelectionRadioGroup = (timeframe: string, setTimeframe: Function) => {
   return (
     <>
       <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-10">
           <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
               <div className="flex items-center pl-3">
-                  <input id="horizontal-list-radio-license" type="radio" value="" name="list-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                  <input id="horizontal-list-radio-license" type="radio" value="5min" onChange={(e) => {setTimeframe(e.target.value)}} name="list-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
                   <label htmlFor="horizontal-list-radio-license" className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">5 min </label>
               </div>
           </li>
           <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
               <div className="flex items-center pl-3">
-                  <input id="horizontal-list-radio-id" type="radio" value="" name="list-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                  <input id="horizontal-list-radio-id" type="radio" value="30min" onChange={(e) => {setTimeframe(e.target.value)}} name="list-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
                   <label htmlFor="horizontal-list-radio-id" className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">30 min</label>
               </div>
           </li>
           <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
               <div className="flex items-center pl-3">
-                  <input id="horizontal-list-radio-millitary" type="radio" value="" name="list-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                  <input id="horizontal-list-radio-millitary" type="radio" value="1day" onChange={(e) => {setTimeframe(e.target.value)}} name="list-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
                   <label htmlFor="horizontal-list-radio-millitary" className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">1 day</label>
               </div>
           </li>
           <li className="w-full dark:border-gray-600">
               <div className="flex items-center pl-3">
-                  <input id="horizontal-list-radio-passport" type="radio" value="" name="list-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                  <input id="horizontal-list-radio-passport" type="radio" value="1week" onChange={(e) => {setTimeframe(e.target.value)}} name="list-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
                   <label htmlFor="horizontal-list-radio-passport" className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">1 week</label>
               </div>
           </li>
@@ -120,22 +121,48 @@ const TimeFrameSelectionRadioGroup = () => {
     </>
   )
 }
-export function CodeMirrorComponent() {
+export function PostgresLoggingComponent(project: any) {
   const defaultQuery = "fields @timestamp, @message | limit 200"
   const [query, setQuery] = useState(defaultQuery)
   const [logs, setLogs] = useState([])
   const [processing, setProcessing] = useState(false)
   const [error, setError] = useState(false)
+  const [timeframe, setTimeframe] = useState("5min")
   const onChange = React.useCallback((value: any, viewUpdate: any) => {
     setQuery(value);
   }, []);
   const runQuery = async () => {
     const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
     const jwt = Cookies.get("jwt")
-    setProcessing(true)
+    setProcessing(true);
+    let startTimeframe, endTimeframe;
+    endTimeframe = moment().unix();
+    console.log("Timeframe: ", timeframe);
+    switch(timeframe) {
+      case "5min":
+        startTimeframe = moment().subtract(5, 'minutes').unix()
+        break;
+      case "30min":
+        startTimeframe = moment().subtract(30, 'minutes').unix()
+        break;
+      case "1day":
+        endTimeframe = moment().subtract(1, 'days').unix()
+        startTimeframe = moment().subtract(2, 'days').unix()
+        break;
+      case "1week":
+        endTimeframe = moment().subtract(5, 'days').unix()
+        startTimeframe = moment().subtract(7, 'days').unix()
+        break;
+      default:
+        startTimeframe = moment().subtract(5, 'minutes').unix()
+        break;
+    }
     const logsResult = await axios.post(`${API_URL}/logs`, 
     {
-      Query: query
+      Query: query,
+      ProjectName: project.name,
+      StartTimestamp: startTimeframe,
+      EndTimestamp: endTimeframe,
     },
     {
       headers: {
@@ -165,7 +192,7 @@ export function CodeMirrorComponent() {
           : null
         }
       </button>
-      {TimeFrameSelectionRadioGroup()}
+      {TimeFrameSelectionRadioGroup(timeframe, setTimeframe)}
       <CodeMirror
         className='pb-20'
         value={defaultQuery}
@@ -605,7 +632,7 @@ const BackendDetails = (project: any, isBackendURLCopied: boolean, setIsBackendU
                 </table>
             </div>
             <div className='pt-10'>
-              <CodeMirrorComponent />
+              {PostgresLoggingComponent(project)}
             </div>
         </div>
         </>
