@@ -67,11 +67,14 @@ const constructTableHeaderFromFirstRow =  (row: any) => {
               {
                 row.map((cell: any, index: number) => {
                   const columnName = cell["Field"].replace("@", "")
-                  return (
-                    <th key={index} scope="col" className="px-6 py-3">
-                      {columnName}
-                    </th>
-                  )
+                  if (columnName !== "ptr") {
+                    return (
+                      <th key={index} scope="col" className="px-6 py-3">
+                        {columnName}
+                      </th>
+                    )
+                  }
+
                 })
               }
               {/* <th key={row.length + 1} scope="col" className="px-6 py-3">
@@ -92,6 +95,12 @@ const TimeFrameSelectionRadioGroup = (timeframe: string, setTimeframe: Function)
   return (
     <>
       <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-10">
+          <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+              <div className="flex items-center pl-3">
+                  <input id="horizontal-list-radio-license" type="radio" value="2min" onChange={(e) => {setTimeframe(e.target.value)}} name="list-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                  <label htmlFor="horizontal-list-radio-license" className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">2 min </label>
+              </div>
+          </li>
           <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
               <div className="flex items-center pl-3">
                   <input id="horizontal-list-radio-license" type="radio" value="5min" onChange={(e) => {setTimeframe(e.target.value)}} name="list-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
@@ -122,12 +131,24 @@ const TimeFrameSelectionRadioGroup = (timeframe: string, setTimeframe: Function)
   )
 }
 export function PostgresLoggingComponent(project: any) {
-  const defaultQuery = "fields @timestamp, @message | limit 200"
+  const dropQuery = `fields @timestamp, @message
+  | filter @message like "DROP"
+  | sort @timestamp desc
+  | limit 100`
+  const createQuery = `fields @timestamp, @message
+  | filter @message like "CREATE"
+  | sort @timestamp desc
+  | limit 100`
+  const defaultQuery = `fields @timestamp, @message
+  | sort @timestamp desc
+  | limit 200`
   const [query, setQuery] = useState(defaultQuery)
   const [logs, setLogs] = useState([])
+  const [filteredLogs, setFilteredLogs] = useState(logs)
   const [processing, setProcessing] = useState(false)
   const [error, setError] = useState(false)
   const [timeframe, setTimeframe] = useState("5min")
+  const [search, setSearch] = useState("")
   const onChange = React.useCallback((value: any, viewUpdate: any) => {
     setQuery(value);
   }, []);
@@ -139,6 +160,9 @@ export function PostgresLoggingComponent(project: any) {
     endTimeframe = moment().unix();
     console.log("Timeframe: ", timeframe);
     switch(timeframe) {
+      case "2min":
+        startTimeframe = moment().subtract(2, 'minutes').unix()
+        break;
       case "5min":
         startTimeframe = moment().subtract(5, 'minutes').unix()
         break;
@@ -173,6 +197,7 @@ export function PostgresLoggingComponent(project: any) {
     setProcessing(false)
     if (logsResult.status === 200 && logsResult.data) {
       setLogs(logsResult.data.Output.Results)
+      setFilteredLogs(logsResult.data.Output.Results)
     } else {
       setError(true)
     }
@@ -193,6 +218,7 @@ export function PostgresLoggingComponent(project: any) {
         }
       </button>
       {TimeFrameSelectionRadioGroup(timeframe, setTimeframe)}
+
       <CodeMirror
         className='pb-20'
         value={defaultQuery}
@@ -201,7 +227,45 @@ export function PostgresLoggingComponent(project: any) {
         // extensions={[javascript({ jsx: true })]}
         onChange={onChange}
       />
-      {LogsTableNew(logs) }
+
+      <div className='grid grid-cols-12 gap-2'>
+        <div className='col col-span-8'>
+          <input id="email" className="form-input w-full" type="email" required onChange={
+            (e) => {
+              const search = e.target.value;
+              setSearch(e.target.value)
+              const filtered = logs.filter((log: any)=> {
+                let found = false;
+                log.map((field: any) => {
+                  if (field["Value"].includes(search)) {
+                    found = true;
+                    console.log("log, search: ", log, search)
+                    return true;
+                  }
+                })
+                return found;
+              })
+              setFilteredLogs(filtered)
+            }
+          }/>          
+        </div>
+        <div className='col col-span-2'>
+          <button className="p-2 bg-forest-green hover:bg-lighter-green mb-6" onClick={() => {}}>
+            {
+              processing ?
+              "Processing  "
+              : "Search"
+            }
+            {
+              processing ?
+              <FontAwesomeIcon icon={faSpinner} spin />
+              : null
+            }
+          </button>
+        </div>
+      </div>
+
+      {LogsTable(filteredLogs) }
 
       {/* <CodeMirror
         value="console.log('hello world!');"
@@ -215,7 +279,7 @@ export function PostgresLoggingComponent(project: any) {
   );
 }
 
-const LogsTableNew = (logs: any) => {
+const LogsTable = (logs: any) => {
   if (!logs.length) {
     return;
   }
@@ -242,20 +306,24 @@ const LogsTableNew = (logs: any) => {
                             if (cell["Field"] == "@timestamp") {
                               const dateObj = new Date(cell["Value"]);
                               const humanReadable = dateObj.toUTCString();
+                              let istDate = moment(humanReadable).local().format('YYYY-MMM-DD h:mm A');;
                               return (
                                 <th scope="row" className="px-6 py-4 font-medium overflow-hidden text-gray-900 whitespace-nowrap dark:text-white">
-                                  {humanReadable}
+                                  {istDate}
                                 </th>
                               )
                             } else if (cell["Field"] == "@message") {
-                              const messageSplit = cell["Value"].split(":LOG:")
-                              const value = messageSplit[1]
+                              // const messageSplit = cell["Value"].split(":LOG:")
+                              // const value = messageSplit[1]
+                              const value = cell["Value"]
                               return (
                                 <td className="px-6 py-4 overflow-hidden">
                                   {value}
                                 </td>
                               )
-                            } 
+                            } else if (cell["Field"] == "@ptr") {
+                              return (null)
+                            }
                             else {
                               return (
                                 <td className="px-6 py-4 overflow-hidden">
@@ -273,247 +341,6 @@ const LogsTableNew = (logs: any) => {
     </table>
 </div>
 
-    </>
-  )
-}
-
-const LogsTableTest = (logs: any) => {
-  return (
-    <>
-
-<div className="relative overflow-x-auto table-container">
-    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
-            <tr>
-                <th scope="col" className="px-6 py-3">
-                    Product name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                    Color
-                </th>
-                <th scope="col" className="px-6 py-3">
-                    Category
-                </th>
-                <th scope="col" className="px-6 py-3">
-                    Price
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Apple MacBook Pro 17"
-                </th>
-                <td className="px-6 py-4">
-                    Silver
-                </td>
-                <td className="px-6 py-4">
-                    Laptop
-                </td>
-                <td className="px-6 py-4">
-                    $2999
-                </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Microsoft Surface Pro
-                </th>
-                <td className="px-6 py-4">
-                    White
-                </td>
-                <td className="px-6 py-4 overflow-hidden">
-                CngKOwo3NTY5NzI1MDk3MTY5Oi9hd3MvcmRzL2luc3RhbmNlL3dpdGhlcmVkLWZyb2cvcG9zdGdyZXNxbBADEjUaGAIGSjSx9AAAAAHIMJ4iAAZNSjigAAAAQiABKPiq                </td>
-                <td className="px-6 py-4">
-                    $1999
-                </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Microsoft Surface Pro
-                </th>
-                <td className="px-6 py-4">
-                    White
-                </td>
-                <td className="px-6 py-4">
-                    Laptop PC
-                </td>
-                <td className="px-6 py-4">
-                    $1999
-                </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Microsoft Surface Pro
-                </th>
-                <td className="px-6 py-4">
-                    White
-                </td>
-                <td className="px-6 py-4">
-                    Laptop PC
-                </td>
-                <td className="px-6 py-4">
-                    $1999
-                </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Microsoft Surface Pro
-                </th>
-                <td className="px-6 py-4">
-                    White
-                </td>
-                <td className="px-6 py-4">
-                    Laptop PC
-                </td>
-                <td className="px-6 py-4">
-                    $1999
-                </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Microsoft Surface Pro
-                </th>
-                <td className="px-6 py-4">
-                    White
-                </td>
-                <td className="px-6 py-4">
-                    Laptop PC
-                </td>
-                <td className="px-6 py-4">
-                    $1999
-                </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Microsoft Surface Pro
-                </th>
-                <td className="px-6 py-4">
-                    White
-                </td>
-                <td className="px-6 py-4">
-                    Laptop PC
-                </td>
-                <td className="px-6 py-4">
-                    $1999
-                </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Microsoft Surface Pro
-                </th>
-                <td className="px-6 py-4">
-                    White
-                </td>
-                <td className="px-6 py-4">
-                    Laptop PC
-                </td>
-                <td className="px-6 py-4">
-                    $1999
-                </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Microsoft Surface Pro
-                </th>
-                <td className="px-6 py-4">
-                    White
-                </td>
-                <td className="px-6 py-4">
-                    Laptop PC
-                </td>
-                <td className="px-6 py-4">
-                    $1999
-                </td>
-            </tr>
-            <tr className="bg-white dark:bg-gray-800">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Magic Mouse 2
-                </th>
-                <td className="px-6 py-4">
-                    Black
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    $99
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-    </>
-  )
-}
-const LogsTable = (logs: any) => {
-  if (typeof logs == undefined || logs.length == 0) {
-    return;
-  }
-  return (
-    <>
-      <div className="bg-dark-mode-bg min-h-screen pt-20">
-        <div className="relative overflow-x-auto rounded-md pt-20 overflow-y-scroll table-container">
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
-                <thead className="text-xs text-gray-900 uppercase dark:text-gray-400">
-                    <tr className="commits-table-bg border-b">
-                        <th scope="col" className="px-6 py-3">
-                            Log Time
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Log Message
-                        </th>
-                        <th scope="col" className="px-6 py-3 overflow-hidden">
-                            Log Id
-                        </th>
-                    </tr>
-                </thead>
-                <tbody className="commits-table-bg height-fixed">
-                  {
-                    logs.map((records: any) => {
-                      // const date = moment(commit.timestamp).fromNow();
-                      return (
-                        <>
-
-                            <tr className="border-b dark:bg-gray-800 dark:border-gray-700">
-                            {
-                              records.map((record: any) => {
-                                if (record["Field"] == "@ptr") {
-                                  return (
-                                    <td className="px-6 py-4">
-                                      {record["Value"].substring(0, 7)}
-                                    </td>
-                                  )                                    
-                                } 
-                                else if (record["Field"] == "@message") {
-                                  const main_message = record["Value"].split(":LOG:")[1]
-                                  return (
-                                    <td className="px-6 py-4">
-                                      {main_message}
-                                    </td>                                    
-                                  )
-                                } 
-                                else {
-                                  return (
-                                    <td className="px-6 py-4">
-                                      {record["Value"]}
-                                    </td>
-                                  )
-                                }
-
-
-                              })
-                            }
-                            </tr>
-
-                        </>
-                      )
-                    })
-                  }
-                </tbody>
-            </table>
-        </div>
-      </div>
     </>
   )
 }
