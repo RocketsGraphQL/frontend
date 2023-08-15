@@ -122,7 +122,7 @@ const TimeFrameSelectionRadioGroup = (timeframe: string, setTimeframe: Function)
     </>
   )
 }
-export function PostgresLoggingComponent() {
+const PostgresLoggingComponent = () => {
   const dropQuery = `fields @timestamp, @message
   | filter @message like "DROP"
   | sort @timestamp desc
