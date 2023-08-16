@@ -379,7 +379,7 @@ export default function AuthPaneComponent() {
 const BackendDetails = () => {
     return (
         <>
-          <div className="min-h-screen project-home">
+          <div className="min-h-screen project-home bg-jet-black">
             <div className='pt-10'>
               {PostgresLoggingComponent()}
             </div>
