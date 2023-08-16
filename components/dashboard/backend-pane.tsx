@@ -375,7 +375,7 @@ export default function AuthPaneComponent({id} : { id: String}) {
 const BackendDetails = (project: any, isBackendURLCopied: boolean, setIsBackendURLCopied: Function) => {
     return (
         <>
-          <div className="bg-dark-mode-bg min-h-screen project-home">
+          <div className="min-h-screen project-home">
             <div className="project-home-heading">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-scale-900">

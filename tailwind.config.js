@@ -18,6 +18,7 @@ module.exports = {
         "lighter-green": "#227b22",
         "yellow-900": "#ffd700",
         "yellow-brand": "#fecc1b",
+        "jet-black": "#343434",
       },
       fontFamily: {
         inter: ['var(--font-inter)', 'sans-serif'],

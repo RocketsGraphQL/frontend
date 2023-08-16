@@ -87,7 +87,7 @@ const TimeFrameSelectionRadioGroup = (timeframe: string, setTimeframe: Function)
   return (
     <>
       <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-10">
-          <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+          <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600 timeframe-input-radio-button">
               <div className="flex items-center pl-3">
                   <input id="horizontal-list-radio-license" type="radio" value="2min" onChange={(e) => {setTimeframe(e.target.value)}} name="list-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
                   <label htmlFor="horizontal-list-radio-license" className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">2 min </label>
@@ -122,6 +122,26 @@ const TimeFrameSelectionRadioGroup = (timeframe: string, setTimeframe: Function)
     </>
   )
 }
+
+const RunQueryButton = (onClickFunc: Function, loading: boolean) => {
+
+  return (
+    <button className="p-2 bg-white hover:bg-scale-1200 text-black p-2 heavy-font-text mb-6 small-rounding" onClick={() => onClickFunc()}>
+    {
+      loading ?
+      "Processing  "
+      : "Run Query"
+    }
+    {
+      loading ?
+      <FontAwesomeIcon icon={faSpinner} spin />
+      : <span className="tracking-normal text-black group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
+    }
+
+    </button>
+  )
+}
+
 const PostgresLoggingComponent = () => {
   const dropQuery = `fields @timestamp, @message
   | filter @message like "DROP"
@@ -198,18 +218,7 @@ const PostgresLoggingComponent = () => {
   return (
     <div>
       <div className='flex flex-row justify-between'>
-        <button className="p-2 bg-forest-green hover:bg-lighter-green mb-6" onClick={() => runQuery()}>
-          {
-            processing ?
-            "Processing  "
-            : "RUN Query"
-          }
-          {
-            processing ?
-            <FontAwesomeIcon icon={faSpinner} spin />
-            : null
-          }
-        </button>
+        {RunQueryButton(runQuery, processing)}
         {dropdown(setQuery)}
       </div>
 
@@ -224,7 +233,7 @@ const PostgresLoggingComponent = () => {
         onChange={onChange}
       />
 
-      <div className='grid grid-cols-12 gap-2'>
+      {/* <div className='grid grid-cols-12 gap-2'>
         <div className='col col-span-8'>
           <input id="email" className="form-input w-full" type="email" required onChange={
             (e) => {
@@ -259,7 +268,7 @@ const PostgresLoggingComponent = () => {
             }
           </button>
         </div>
-      </div>
+      </div> */}
 
       {LogsTable(filteredLogs) }
 
@@ -370,7 +379,7 @@ export default function AuthPaneComponent() {
 const BackendDetails = () => {
     return (
         <>
-          <div className="bg-dark-mode-bg min-h-screen project-home">
+          <div className="min-h-screen project-home">
             <div className='pt-10'>
               {PostgresLoggingComponent()}
             </div>

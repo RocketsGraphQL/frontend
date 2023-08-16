@@ -39,9 +39,9 @@ export default function Example(setQuery: Function) {
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-96 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
-            <Menu.Item>
+            <Menu.Item >
               {({ active }) => (
-                <a
+                <li
                   onClick={() => setQuery(defaultQuery)}
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -49,7 +49,7 @@ export default function Example(setQuery: Function) {
                   )}
                 >
                   Log all commands executed in timeframe
-                </a>
+                </li>
               )}
             </Menu.Item>
             <Menu.Item>

@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-inter antialiased bg-slate-900 text-slate-100 tracking-tight`}>
+      <body className={`${inter.variable} font-inter antialiased bg-jet-black text-slate-100 tracking-tight`}>
         <div className="flex flex-col min-h-screen overflow-hidden">
           {children}
         </div>
