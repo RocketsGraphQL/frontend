@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { LibraryAddCheckRounded } from '@mui/icons-material'
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
@@ -54,7 +55,7 @@ export default function Example(setQuery: Function) {
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
-                <a
+                <li
                   onClick={() => setQuery(dropQuery)}
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -62,14 +63,14 @@ export default function Example(setQuery: Function) {
                   )}
                 >
                   Log all DROP commands executed in timeframe
-                </a>
+                </li>
               )}
             </Menu.Item>
           </div>
           <div className="py-1">
             <Menu.Item>
               {({ active }) => { return(
-                <a
+                <li
                   onClick={() => setQuery(createQuery)}
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -77,7 +78,7 @@ export default function Example(setQuery: Function) {
                   )}
                 >
                   Log all CREATE commands executed in timeframe
-                </a>
+                </li>
               )}}
             </Menu.Item>
             {/* <Menu.Item>
