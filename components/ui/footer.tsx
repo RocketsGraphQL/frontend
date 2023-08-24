@@ -49,6 +49,9 @@ export default function Footer() {
             <h6 className="text-sm text-slate-50 font-medium mb-2">Products</h6>
             <ul className="text-sm space-y-2">
               <li>
+                <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="https://rocketgraph.io/logger-demo">Postgres logger</a>
+              </li>
+              <li>
                 <a className="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out" href="https://github.com/RocketsGraphQL/rgraph">Features</a>
               </li>
               <li>
