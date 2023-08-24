@@ -160,11 +160,9 @@ export function PostgresLoggingComponent(project: any) {
         startTimeframe = moment().subtract(30, 'minutes').unix()
         break;
       case "1day":
-        endTimeframe = moment().subtract(1, 'days').unix()
-        startTimeframe = moment().subtract(2, 'days').unix()
+        startTimeframe = moment().subtract(1, 'days').unix()
         break;
       case "1week":
-        endTimeframe = moment().subtract(5, 'days').unix()
         startTimeframe = moment().subtract(7, 'days').unix()
         break;
       default:
