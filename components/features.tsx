@@ -33,7 +33,7 @@ export default function Features() {
           </div>
         </div>
 
-        <div className="pt-16 pb-12 md:pt-52 md:pb-20">
+        <div className="pt-16 pb-12 md:pt-52 md:pb-20 hidden md:block">
 
           <div>
 
@@ -210,7 +210,7 @@ export default function Features() {
 
               {/* Box #2 */}
               <div className="md:col-span-7 pt-16" data-aos="fade-down">
-                <h3 className="h3 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-3">Simplify your authentication</h3>
+                <h3 className="h3 text-center bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-3">Simplify your authentication</h3>
                 <p className="text-lg text-slate-400 mb-8">Once you define the auth client and use RApolloProvider, subscribing to your data is as simple as writing a JSON of what you want. Simply plugin your favourite frontend framework and deploy production grade web applications in minutes.</p>
               </div>
             </div>

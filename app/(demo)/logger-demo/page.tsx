@@ -1,6 +1,7 @@
 'use client'
   
-import { gql, useSubscription } from '@apollo/client';
+import { gql } from '@apollo/client';
+import Link from 'next/link'
 import { useState } from 'react';
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { faClipboard, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons'
@@ -8,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import React from "react";
 import CodeMirror from "@uiw/react-codemirror";
+import { javascript } from "@codemirror/lang-javascript";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import moment from 'moment';
@@ -85,7 +87,7 @@ const TimeFrameSelectionRadioGroup = (timeframe: string, setTimeframe: Function)
   return (
     <>
       <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white mb-10">
-          <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+          <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600 timeframe-input-radio-button">
               <div className="flex items-center pl-3">
                   <input id="horizontal-list-radio-license" type="radio" value="2min" onChange={(e) => {setTimeframe(e.target.value)}} name="list-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
                   <label htmlFor="horizontal-list-radio-license" className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">2 min </label>
@@ -120,7 +122,27 @@ const TimeFrameSelectionRadioGroup = (timeframe: string, setTimeframe: Function)
     </>
   )
 }
-export function PostgresLoggingComponent(project: any) {
+
+const RunQueryButton = (onClickFunc: Function, loading: boolean) => {
+
+  return (
+    <button className="p-2 bg-white hover:bg-scale-1200 text-black p-2 heavy-font-text mb-6 small-rounding" onClick={() => onClickFunc()}>
+    {
+      loading ?
+      "Processing  "
+      : "Run Query"
+    }
+    {
+      loading ?
+      <FontAwesomeIcon icon={faSpinner} spin />
+      : <span className="tracking-normal text-black group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
+    }
+
+    </button>
+  )
+}
+
+const PostgresLoggingComponent = () => {
   const dropQuery = `fields @timestamp, @message
   | filter @message like "DROP"
   | sort @timestamp desc
@@ -143,7 +165,7 @@ export function PostgresLoggingComponent(project: any) {
     setQuery(value);
   }, []);
   const runQuery = async () => {
-    const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const API_URL = process.env.NEXT_PUBLIC_API_DEMO_URL;
     const jwt = Cookies.get("jwt")
     setProcessing(true);
     let startTimeframe, endTimeframe;
@@ -172,7 +194,7 @@ export function PostgresLoggingComponent(project: any) {
     const logsResult = await axios.post(`${API_URL}/logs`, 
     {
       Query: query,
-      ProjectName: project.name,
+      ProjectName: "withered-frog",
       StartTimestamp: startTimeframe,
       EndTimestamp: endTimeframe,
     },
@@ -194,18 +216,7 @@ export function PostgresLoggingComponent(project: any) {
   return (
     <div>
       <div className='flex flex-row justify-between'>
-        <button className="p-2 bg-forest-green hover:bg-lighter-green mb-6" onClick={() => runQuery()}>
-          {
-            processing ?
-            "Processing  "
-            : "RUN Query"
-          }
-          {
-            processing ?
-            <FontAwesomeIcon icon={faSpinner} spin />
-            : null
-          }
-        </button>
+        {RunQueryButton(runQuery, processing)}
         {dropdown(setQuery)}
       </div>
 
@@ -220,7 +231,7 @@ export function PostgresLoggingComponent(project: any) {
         onChange={onChange}
       />
 
-      <div className='grid grid-cols-12 gap-2'>
+      {/* <div className='grid grid-cols-12 gap-2'>
         <div className='col col-span-8'>
           <input id="email" className="form-input w-full" type="email" required onChange={
             (e) => {
@@ -255,7 +266,7 @@ export function PostgresLoggingComponent(project: any) {
             }
           </button>
         </div>
-      </div>
+      </div> */}
 
       {LogsTable(filteredLogs) }
 
@@ -352,106 +363,23 @@ const GET_PROJECTS = (pid: String) => gql`
   }
 `;
 
-export default function AuthPaneComponent({id} : { id: String}) {
-    let project_id = id;
-
-    const { data, loading } = useSubscription(GET_PROJECTS(project_id));
-  
-    let project = data?.instances[0];
-    console.log("Project: ", project);
-    const [isBackendURLCopied, setIsBackendURLCopied] = useState(false);
+export default function AuthPaneComponent() {
     
     return (
         <>
         {
-            BackendDetails(project, isBackendURLCopied, setIsBackendURLCopied)
+            BackendDetails()
         }
         </>
     )
 }
 
-const BackendDetails = (project: any, isBackendURLCopied: boolean, setIsBackendURLCopied: Function) => {
+const BackendDetails = () => {
     return (
         <>
-          <div className="min-h-screen project-home">
-            <div className="project-home-heading">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-scale-900">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-                      >
-                        Name
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-                      >
-                        Status
-                      </th>
-                    </tr>
-                  </thead>
-                  {project && project.postgresql_endpoint && (
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900">
-                                Backend URL
-                              </div>
-                              <div className="text-sm text-gray-500">
-                                {project.backend_endpoint}
-                                {isBackendURLCopied ? (
-                                  <span>
-                                    <FontAwesomeIcon className="project-creation-event-spinner ml-2" size="xl" icon={faCheck} />
-                                  </span>
-                                ) : ( 
-                                  <CopyToClipboard
-                                    text={project.backend_endpoint}
-                                    onCopy={() => setIsBackendURLCopied(true)}
-                                  >
-                                    <span>
-                                        <FontAwesomeIcon className="project-creation-event-spinner ml-2" size="xl" icon={faClipboard} />
-                                    </span>
-                                  </CopyToClipboard>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                            Active
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900">
-                                PostgreSQL connection string
-                              </div>
-                              <div className="text-sm text-gray-500">
-                                {project.postgresql_endpoint}
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                            Active
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  )}
-                </table>
-            </div>
+          <div className="min-h-screen project-home bg-jet-black">
             <div className='pt-10'>
-              {PostgresLoggingComponent(project)}
+              {PostgresLoggingComponent()}
             </div>
         </div>
         </>

@@ -263,3 +263,26 @@ h3{
 	text-decoration: underline;
 	cursor: pointer;
 }
+
+.table-container {
+	height: 600px;
+}
+.height-fixed {
+	max-height: 200px;
+	overflow: scroll;
+}
+
+.timeframe-input-radio-button {
+	position: fixed;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.heavy-font-text {
+	line-height: 1.2;
+	font-weight: 600;	
+}
+
+.small-rounding {
+	border-radius: 4px;
+}
