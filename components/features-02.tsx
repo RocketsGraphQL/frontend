@@ -92,8 +92,8 @@ export default function Features02() {
                       {/* Image */}
                       <div className="relative w-full h-64 md:h-auto overflow-hidden">
                         {/* <Image className="absolute bottom-0 left-1/2 -translate-x-1/2 mx-auto max-w-none md:relative md:left-0{md}transla{}-x-0" src={FeatureImg01} width="504" height="400" alt="Feature 01" /> */}
-                        <video autoPlay loop muted={muted} style={{ }} className="filter-blur-lg">
-                          <source src="/videos/rocketgraph_introduction.mov" />
+                        <video autoPlay preload="none" loop muted={muted} style={{ }} className="filter-blur-lg">
+                          <source src="https://production-customer-site-public.s3.us-east-2.amazonaws.com/rocketgraph_introduction.mov" />
                         </video>
                         {
                           muted ?
