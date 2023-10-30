@@ -286,3 +286,27 @@ h3{
 .small-rounding {
 	border-radius: 4px;
 }
+
+.feature-showcase-pink {
+	color: #ff55bb;
+}
+
+.feature-showcase-halogen {
+	color: #a6ff00;
+}
+
+.feature-showcase-blue {
+	color: #2563eb;
+}
+
+.feature-showcase-orange {
+	color: #fe5829;
+}
+
+.feature-showcase-yellow {
+	color: #f6ff01;
+}
+
+.feature-showcase-purple {
+	color: #7149c6;
+}
