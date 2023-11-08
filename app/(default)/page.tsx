@@ -18,6 +18,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Clients />
       <Features />
       <Features02 />
       {/* <Features03 /> */}
