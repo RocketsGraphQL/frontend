@@ -70,21 +70,21 @@ const authLink = setContext((_, { headers }) => {
 const NewFunctionURLDisplay = (project: any) => {
   return (
     <div className="grid grid-cols-1 justify-between text-scale-1200 pt-20 gap-2">
-    <div className="col project-auth-urls">
-        <div className='text pb-4'>
-            <p className='pb-4 text'>
-              Functions URL
-            </p>
-            <div className='project-pane-code'>
-              <pre className="m-0">
-                <code className="WHnkZwe1S6bYhZVXiN93 select-all" data-cursor="$">
-                  {project.lambda_endpoint}
-                </code>
-              </pre>
-            </div>
-        </div>
+      <div className="col project-auth-urls dark:bg-slate-900/20">
+          <div className='text pb-4'>
+              <p className='pb-4 text'>
+                Functions URL
+              </p>
+              <div className='project-pane-code'>
+                <pre className="m-0">
+                  <code className="WHnkZwe1S6bYhZVXiN93 select-all" data-cursor="$">
+                    {project.lambda_endpoint}
+                  </code>
+                </pre>
+              </div>
+          </div>
+      </div>
     </div>
-  </div>
   )
 }
 
@@ -97,7 +97,8 @@ const NewCommitsTable = (commits: any, project: any) => {
         {NewFunctionURLDisplay(project)}
         <div className="relative overflow-x-auto rounded-md pt-20">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-900 uppercase dark:text-gray-400">
+              {/* Table Header */}
+                <thead className="text-xs text-gray-900 uppercase dark:bg-slate-900/20 dark:text-gray-400">
                     <tr className="commits-table-bg border-b">
                         <th scope="col" className="px-6 py-3">
                             Commit Message
@@ -119,7 +120,7 @@ const NewCommitsTable = (commits: any, project: any) => {
                       const date = moment(commit.timestamp).fromNow();
                       return (
                         <>
-                          <tr key={commit.id} className="border-b dark:bg-gray-800 dark:border-gray-700">
+                          <tr key={commit.id} className="border-b dark:bg-slate-900/20 dark:border-gray-700">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                               {commit.message}
                             </th>
@@ -188,7 +189,7 @@ export default function Project({id} : { id: String}) {
       .query({
         query: gql`      
           query MyQuery {
-              commits(where: {name: {_eq: "${name}"}}) {
+              commits(where: {name: {_eq: "${name}"}}, order_by: {timestamp: desc}, limit: 10) {
                 author
                 email
                 message
