@@ -11,7 +11,7 @@ export default function Dashboard() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  console.log("params", searchParams.get('installation_id'));
+  console.log("post setup params", searchParams.get('installation_id'));
   const [selectedRepo, setSelectedRepo] = useState<any>();
   const [repos, setRepos] = useState([]);
   const [repo, setRepo] = useState();
