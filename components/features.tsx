@@ -14,6 +14,9 @@ import RocketgraphDashboard from "@/public/rocketgraph_dashboard_15fps.gif"
 import HasuraDashboard from "@/public/hasura_dashboard_showcase_15fps.gif"
 import { motion } from "framer-motion"
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRocket, faFlask, faKey, faDatabase, faWandMagicSparkles, faMagnifyingGlass, faCrown } from '@fortawesome/free-solid-svg-icons'
+
 export default function Features() {
 
   const [tab, setTab] = useState<number>(1)
@@ -210,8 +213,48 @@ export default function Features() {
 
               {/* Box #2 */}
               <div className="md:col-span-7 pt-16" data-aos="fade-down">
-                <h3 className="h3 text-center bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-3">Simplify your authentication</h3>
-                <p className="text-lg text-slate-400 mb-8">Once you define the auth client and use RApolloProvider, subscribing to your data is as simple as writing a JSON of what you want. Simply plugin your favourite frontend framework and deploy production grade web applications in minutes.</p>
+                <h3 className="h3 text-center bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Simplify your authentication</h3>
+                {/* <p className="text-lg text-slate-400 mb-8">Once you define the auth client and use RApolloProvider, subscribing to your data is as simple as writing a JSON of what you want. Simply plugin your favourite frontend framework and deploy production grade web applications in minutes.</p> */}
+                {/* <div className="flex items-center space-x-2 mb-1">
+                  <div className='border-sm rounded px-2 py-1 bg-scale-300'>
+                    <FontAwesomeIcon className="feature-showcase-purple" icon={faCloud} />
+                  </div>
+                  <h4 className="font-medium text-slate-50">Configure your Next.js/React code to connect to the backend</h4>
+                </div>
+                <div className="flex items-center space-x-2 mb-1">
+                  <div className='border-sm rounded px-2 py-1 bg-scale-300'>
+                    <FontAwesomeIcon className="feature-showcase-purple" icon={faCloud} />
+                  </div>
+                  <h4 className="font-medium text-slate-50">Connect RApolloProvider to </h4>
+                </div> */}
+
+                <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">                  
+                    <li className="mb-10 ml-6">            
+                      <span className='border-sm rounded px-2 py-1 bg-scale-300 absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700'>
+                        <FontAwesomeIcon className="feature-showcase-halogen" icon={faRocket} />
+                      </span>
+                      <p className="text-md pt-1">Configure Rocketgraph js SDK using createClient</p>
+                    </li>
+                    <li className="mb-10 ml-6">
+                      <span className='border-sm rounded px-2 py-1 bg-scale-300 absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700'>
+                        <FontAwesomeIcon className="feature-showcase-halogen" icon={faKey} />
+                      </span>
+                      <p className="text-md pt-1">Connect your Next.js/React.js app with the RApolloProvider</p>
+                    </li>
+                    <li className="mb-10 ml-6">
+                      <span className='border-sm rounded px-2 py-1 bg-scale-300 absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700'>
+                        <FontAwesomeIcon className="feature-showcase-halogen" icon={faDatabase} />
+                      </span>
+                      <p className="text-md pt-1">Setup your data and permission rules in the Hasura console</p>
+                    </li>
+                    <li className="ml-6">
+                      <span className='border-sm rounded px-2 py-1 bg-scale-300 absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700'>
+                        <FontAwesomeIcon className="feature-showcase-halogen" icon={faWandMagicSparkles} />
+                      </span>
+                      <p className="text-md pt-1">Subscribe to your tables/data using useSubscription</p>
+                    </li>
+                </ol>
+
               </div>
             </div>
 

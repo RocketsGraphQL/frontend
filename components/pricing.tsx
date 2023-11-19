@@ -26,7 +26,7 @@ export default function Pricing() {
                 <div className="text-lg font-semibold mb-1">Developer</div>
                 <div className="font-uncut-sans inline-flex items-baseline mb-2">
                   <span className="text-3xl font-medium text-gray-400">$</span>
-                  <span className="text-4xl font-bold leading-7">79</span>
+                  <span className="text-4xl font-bold leading-7">50</span>
                   <span className="font-medium text-gray-400">/mo</span>
                 </div>
                 <div className="text-gray-400 mb-6">For teams building apps for many users.</div>
