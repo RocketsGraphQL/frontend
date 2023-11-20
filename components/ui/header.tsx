@@ -3,8 +3,8 @@ import Logo from './logo'
 
 export default function Header() {
   return (
-    <header className="absolute w-full z-30 ">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 top-0 sticky">
+    <header className="w-full z-30 header-container flex items-center justify-center">
+      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:top-0 fixed top-0">
         <div className="flex items-center justify-between h-16 md:h-20">
 
           {/* Site branding */}
