@@ -78,7 +78,7 @@ export default function Hero() {
             </div>
           </div>
 
-<div className='pt-12 pl-6'>
+<div className='pt-12 pl-12'>
           {/* Features list */}
           <div className="grid md:grid-cols-3 gap-8 md:gap-12">
             {/* Feature */}
