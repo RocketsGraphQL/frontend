@@ -194,7 +194,7 @@ const PostgresLoggingComponent = () => {
     const logsResult = await axios.post(`${API_URL}/logs`, 
     {
       Query: query,
-      ProjectName: "cold-frost",
+      ProjectName: "restless-pine",
       StartTimestamp: startTimeframe,
       EndTimestamp: endTimeframe,
     },

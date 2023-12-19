@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Highlighter, { HighlighterItem } from './highlighter'
 
-import FeatureImg04 from '@/public/images/feature-image-04.png'
+import FeatureImg04 from '@/public/images/show_logger_hero.gif'
 
 export default function Features03() {
   return (
@@ -25,8 +25,8 @@ export default function Features03() {
 
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">More than a login box</h2>
-            <p className="text-lg text-slate-400">There are many variations available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+            <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Postgres Logger</h2>
+            <p className="text-lg text-slate-400">Postgres logs that you can query for all the CREATE/DROP/UPDATE commands and other miscellaneous commands in a set timeframe. Debug issues in your database with ease with this Postgres logger pre-configured. </p>
           </div>
 
           <div className="max-w-3xl mx-auto">
