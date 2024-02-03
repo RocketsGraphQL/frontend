@@ -16,7 +16,7 @@ export default function Pricing() {
               <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">Pricing plans</div>
             </div>
             <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Flexible plans and features</h2>
-            <p className="text-lg text-slate-400">Rocketgraph comes with 1 week free trial. You don't need Credit card to try it out.</p>
+            <p className="text-lg text-slate-400">Rocketgraph comes with 1 day free trial. You don't need Credit card to try it out.</p>
           </div>
           {/* Pricing tables */}
           <div className="max-w-sm mx-auto grid gap-8 lg:grid-cols-3 lg:gap-6 items-center lg:max-w-none pt-4">
