@@ -27,6 +27,14 @@ const signup = async (username: string, password: string, loading: Function, nav
     password: password,
   };
   loading(true);
+  if (typeof username == typeof undefined || username.trim() == "") {
+    loading(false);
+    return;
+  }
+  if (typeof password == typeof undefined || password.trim() == "") {
+    loading(false);
+    return;
+  }
   const signupResp = await axios.post(`${AUTH_URL}/signup`, {
     email: username,
     password: password,
