@@ -14,9 +14,7 @@ export default function DefaultLayout({
     <>      
       <main className="bg-scale-300">
         <Sidebar pid={project_id} />
-        <div className="pl-10">
-          {children}
-        </div>
+        {children}
       </main>
     </>
   )

@@ -59,9 +59,11 @@ export default function Dashboard() {
           <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 h-30s flex justify-between">
             <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
             <form action={API_URL_BILLING_PORTAL} method="POST">
-              <button className="rounded-full bg-brand-900 mb-30 h-6 pl-2 text-sm text-white">
+              {/* <button className="rounded-full bg-brand-900 mb-30 h-6 pl-2 text-sm text-white">
                 update billing information
-              </button>
+              </button> */}
+              <button className="bg-green-100 text-green-800 text-s font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300 cursor-pointer">update billing information</button>
+
             </form>
           </div>
         </header>

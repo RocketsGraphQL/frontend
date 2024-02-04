@@ -34,8 +34,8 @@ export default function HasuraPaneComponent({id} : { id: String}) {
         <>
           <div className="bg-dark-mode-bg min-h-screen project-home">
             <div className="project-home-heading">
-              <p className="text-xl text-scale-1200">Hasura Console</p>
-              <div className="grid grid-cols-1 justify-between text-scale-1200 pt-20 gap-2">
+              <p className="text-xl text-scale-1200 pl-10">Hasura Console</p>
+              <div className="grid grid-cols-1 justify-between text-scale-1200 pt-20 gap-2 pl-10">
                 <div className="col project-auth-urls">
                     <div className='text pb-4'>
                         <p className='pb-4 text'>

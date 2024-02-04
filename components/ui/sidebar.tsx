@@ -1,6 +1,6 @@
 import { useRouter, usePathname } from "next/navigation";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faDatabase, faTable, faCode, faCog, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faDatabase, faTable, faCode, faCog, faArrowLeft, faFlask, faCloud } from '@fortawesome/free-solid-svg-icons'
 import { faStripeS } from '@fortawesome/free-brands-svg-icons'
 
 export default function Sidebar(props: any) {
@@ -13,6 +13,7 @@ export default function Sidebar(props: any) {
     const isHasuraActive = current_url.includes('/hasura');
     const isAuthActive = current_url.includes('/auth');
     const isServerlessActive = current_url.includes('/serverless');
+    const isAiActive = current_url.includes('/ai');
     const isStripeActive = current_url.includes('/stripe');
     const isSettingsActive = current_url.includes('/settings');
     return (
@@ -32,24 +33,30 @@ export default function Sidebar(props: any) {
 
                 <a href={`/project/${projectId}/hasura`}>
                     <li className={isHasuraActive ? "sidebar-button sidebar-button-active" : "sidebar-button sidebar-button-inactive"}>
-                        <FontAwesomeIcon className="sidebar-icon" icon={faDatabase} />
+                        <FontAwesomeIcon className="sidebar-icon" icon={faCloud} />
                     </li>
                 </a>
                 <a href={`/project/${projectId}/auth`}>
                     <li className={isAuthActive ? "sidebar-button sidebar-button-active" : "sidebar-button sidebar-button-inactive"}>
-                        <FontAwesomeIcon className="sidebar-icon" icon={faTable} />
-                    </li>
-                </a>
-
-                <a href={`/project/${projectId}/stripe`}>
-                    <li className={isStripeActive ? "sidebar-button sidebar-button-active" : "sidebar-button sidebar-button-inactive"}>
-                        <FontAwesomeIcon className="sidebar-icon" icon={faStripeS} />
+                        <FontAwesomeIcon className="sidebar-icon" icon={faDatabase} />
                     </li>
                 </a>
 
                 <a href={`/project/${projectId}/serverless`}>
                     <li className={isServerlessActive? "sidebar-button sidebar-button-active" : "sidebar-button sidebar-button-inactive"}>
                         <FontAwesomeIcon className="sidebar-icon" icon={faCode} />
+                    </li>
+                </a>
+
+                <a href={`/project/${projectId}/ai`}>
+                    <li className={isAiActive ? "sidebar-button sidebar-button-active" : "sidebar-button sidebar-button-inactive"}>
+                        <FontAwesomeIcon className="sidebar-icon" icon={faFlask} />
+                    </li>
+                </a>
+
+                <a href={`/project/${projectId}/stripe`}>
+                    <li className={isStripeActive ? "sidebar-button sidebar-button-active" : "sidebar-button sidebar-button-inactive"}>
+                        <FontAwesomeIcon className="sidebar-icon" icon={faStripeS} />
                     </li>
                 </a>
 
