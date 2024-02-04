@@ -130,7 +130,7 @@ export default function SettingsPane({id} : { id: String}) {
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
               <div className="px-4 sm:px-0">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                <h3 className="text-lg font-medium leading-6 text-gray-600">
                   Github secrets
                 </h3>
                 <p className="mt-1 text-sm text-gray-600">
@@ -196,7 +196,7 @@ export default function SettingsPane({id} : { id: String}) {
               </div>
             </div>
           </div>
-          <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+          <div className="px-4 py-3 text-right sm:px-6">
             <button
               onClick={submitGithub}
               className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-brand-900 hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -216,7 +216,7 @@ export default function SettingsPane({id} : { id: String}) {
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
               <div className="px-4 sm:px-0">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                <h3 className="text-lg font-medium leading-6 text-gray-600">
                   Google secrets
                 </h3>
                 <p className="mt-1 text-sm text-gray-600">
@@ -299,7 +299,7 @@ export default function SettingsPane({id} : { id: String}) {
               </div>
             </div>
           </div>
-          <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+          <div className="px-4 py-3 text-right sm:px-6">
             <button
               onClick={submitGoogle}
               className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-brand-900 hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

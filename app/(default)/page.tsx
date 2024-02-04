@@ -13,6 +13,7 @@ import Features04 from '@/components/features-04'
 import Pricing from '@/components/pricing'
 import Testimonials from '@/components/testimonials'
 import Cta from '@/components/cta'
+import Cookie from "@/components/ui/cookie"
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
       {/* <Features04 /> */}
       <Pricing />
       {/* <Testimonials /> */}
+      <Cookie />
       <Cta />
     </>
   )
