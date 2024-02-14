@@ -6,8 +6,12 @@ import Image from 'next/image'
 import LogoImg from '@/public/favicon.ico'
 import { useState } from 'react';
 
+import posthog from 'posthog-js'
+
+
 export default function Logo() {
 
+  posthog.init('phc_m8glo5F9EXdBsm1tGAjpALMvHaEktRZzhm6FYKbnxwv', { api_host: 'https://app.posthog.com' })
   const [show, toggleShow] = useState(true);
   return (
     <>
