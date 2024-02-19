@@ -3,7 +3,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 import Image from 'next/image'
-import FeatureIllustration from '@/public/code_showcase_15fps.gif'
+import CodeIllustration from '@/public/code_showcase_15fps.gif'
+import FeatureIllustration from '@/public/rocketgraph_dashboard_15fps.gif'
+import HasuraIllustration from '@/public/hasura_dashboard_showcase_15fps.gif'
+
+
 import FeatureImage01 from '@/public/feature-01.png'
 
 export default function Features01() {
@@ -115,7 +119,7 @@ export default function Features01() {
                   unmount={false}                      
                 >
                   <div className="inline-flex relative align-top">
-                    <Image className="rounded-t-lg border border-transparent [background:linear-gradient(theme(colors.white),theme(colors.white))_padding-box,linear-gradient(120deg,theme(colors.zinc.300),theme(colors.zinc.100),theme(colors.zinc.300))_border-box] box-content shadow-2xl" src={FeatureImage01} width={600} height={360} alt="Feature 02" />
+                    <Image className="rounded-t-lg border border-transparent [background:linear-gradient(theme(colors.white),theme(colors.white))_padding-box,linear-gradient(120deg,theme(colors.zinc.300),theme(colors.zinc.100),theme(colors.zinc.300))_border-box] box-content shadow-2xl" src={HasuraIllustration} width={600} height={360} alt="Feature 02" />
                     {/* <Image className="absolute top-0 left-full -translate-x-[70%] -mr-20 max-md:w-[45%]" src={FeatureIllustration} width={273} height={288} alt="Illustration" aria-hidden="true" /> */}
                   </div>
                 </Transition>
@@ -133,7 +137,7 @@ export default function Features01() {
                   unmount={false}                      
                 >
                   <div className="inline-flex relative align-top">
-                    <Image className="rounded-t-lg border border-transparent [background:linear-gradient(theme(colors.white),theme(colors.white))_padding-box,linear-gradient(120deg,theme(colors.zinc.300),theme(colors.zinc.100),theme(colors.zinc.300))_border-box] box-content shadow-2xl" src={FeatureImage01} width={600} height={360} alt="Feature 03" />
+                    <Image className="rounded-t-lg border border-transparent [background:linear-gradient(theme(colors.white),theme(colors.white))_padding-box,linear-gradient(120deg,theme(colors.zinc.300),theme(colors.zinc.100),theme(colors.zinc.300))_border-box] box-content shadow-2xl" src={FeatureIllustration} width={600} height={360} alt="Feature 03" />
                     {/* <Image className="absolute top-0 left-full -translate-x-[70%] -mr-20 max-md:w-[45%]" src={FeatureIllustration} width={273} height={288} alt="Illustration" aria-hidden="true" /> */}
                   </div>
                 </Transition>
@@ -151,7 +155,7 @@ export default function Features01() {
                   unmount={false}                      
                 >
                   <div className="inline-flex relative align-top">
-                    <Image className="rounded-t-lg border border-transparent [background:linear-gradient(theme(colors.white),theme(colors.white))_padding-box,linear-gradient(120deg,theme(colors.zinc.300),theme(colors.zinc.100),theme(colors.zinc.300))_border-box] box-content shadow-2xl" src={FeatureImage01} width={600} height={360} alt="Feature 04" />
+                    <Image className="rounded-t-lg border border-transparent [background:linear-gradient(theme(colors.white),theme(colors.white))_padding-box,linear-gradient(120deg,theme(colors.zinc.300),theme(colors.zinc.100),theme(colors.zinc.300))_border-box] box-content shadow-2xl" src={CodeIllustration} width={600} height={360} alt="Feature 04" />
                     {/* <Image className="absolute top-0 left-full -translate-x-[70%] -mr-20 max-md:w-[45%]" src={FeatureIllustration} width={273} height={288} alt="Illustration" aria-hidden="true" /> */}
                   </div>
                 </Transition>
