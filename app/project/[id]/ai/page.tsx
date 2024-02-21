@@ -3,9 +3,6 @@ export const metadata = {
     description: 'Page description',
 }
   
-  import Link from 'next/link'
-
-  
   // export default function AIMarketplace({ params }: {
   //   params: { id: String }
   // }) {
@@ -37,13 +34,13 @@ export const metadata = {
   const messages: Message[] = [
     {
       id: '123445',
-      content: "nee yamma dengey",
+      content: "Rocketgraph lets developers build production grade web applications in minutes rather than in weeks.",
       role: "user"
     },
     {
-      id: '123445',
-      content: "nee yabba dengey",
-      role: "user"
+      id: '678991',
+      content: "We do this by providing pre-configured PostgresDB, built-in authentication, Managed GraphQl API and console, serverless functions and a custom chatbot right out of the box.",
+      role: "system"
     }
   ]
   

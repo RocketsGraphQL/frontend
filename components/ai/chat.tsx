@@ -1,9 +1,11 @@
+'use client'
 
 import { useChat, type Message } from 'ai/react'
 
 import { ChatInput } from "@/components/ai/chat-input"
 import { MessageBox } from "@/components/ai/message-box"
 import { Button } from "@/components/shadcn-ui/button"
+import { useEffect, useState } from 'react'
 
 
 export interface ChatProps extends React.ComponentProps<'div'> {
@@ -13,8 +15,41 @@ export interface ChatProps extends React.ComponentProps<'div'> {
     chatId?: string
 }
 
+const uniqueId = () => {
+    return Math.random().toString(36).substring(2) + Date.now().toString(36);
+}
+
 export function Chat({ id, initialMessages, className, chatId }: ChatProps) {
     console.log("PID:", id);
+
+    const [ currentMessage,  setCurrentMessage ] = useState('');
+    const [messages, setMessages] = useState<Message[]>([]);
+
+
+
+    useEffect(() => {
+        if (initialMessages) {
+            setMessages(initialMessages)
+        }
+    }, [])
+
+    console.log(initialMessages)
+    const handleChange = (message: string) => {
+        setCurrentMessage(message)
+    }
+
+    const sendMessage = (message: string) => {
+        console.log("message", message)
+        if (initialMessages) {
+            const newMessage : Message = {
+                id: uniqueId(),
+                role: 'user',
+                content: message
+            };
+            initialMessages.push(newMessage)
+            setMessages(initialMessages)
+        }
+    }
     return (
       <section className="bg-white dark:bg-transparent">
           <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
@@ -32,11 +67,11 @@ export function Chat({ id, initialMessages, className, chatId }: ChatProps) {
               <div className="hidden lg:mt-0 lg:col-span-7 lg:flex ml-4">
                     <div className='grid grid-rows-12 w-full gap-8 justify-normal'>
                         {/* <img className="w-full hidden dark:block" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup-dark.svg" alt="dashboard image" /> */}
-                        <MessageBox messages={initialMessages} />
+                        <MessageBox messages={messages} />
                         <div className='row-span-2'>
-                            <ChatInput />
+                            <ChatInput value={currentMessage} onChangeMessage={handleChange} />
                         </div>
-                        <Button className='w-full'>Send message</Button>
+                        <Button onClick={(e) => {sendMessage(currentMessage); setCurrentMessage('')}} className='w-full'>Send message</Button>
                     </div>
               </div>                
           </div>
