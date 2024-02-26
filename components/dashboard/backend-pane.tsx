@@ -371,7 +371,7 @@ const BackendDetails = (project: any, isBackendURLCopied: boolean, setIsBackendU
                               </div>
                               <div className="text-sm text-gray-500">
                                 {project.backend_endpoint}
-                                {isBackendURLCopied ? (
+                                {/* {isBackendURLCopied ? (
                                   <span>
                                     <FontAwesomeIcon className="project-creation-event-spinner ml-2" size="xl" icon={faCheck} />
                                   </span>
@@ -384,7 +384,7 @@ const BackendDetails = (project: any, isBackendURLCopied: boolean, setIsBackendU
                                         <FontAwesomeIcon className="project-creation-event-spinner ml-2" size="xl" icon={faClipboard} />
                                     </span>
                                   </CopyToClipboard>
-                                )}
+                                )} */}
                               </div>
                             </div>
                           </div>
@@ -404,7 +404,7 @@ const BackendDetails = (project: any, isBackendURLCopied: boolean, setIsBackendU
                               </div>
                               <div className="text-sm text-gray-500">
                                 {project.postgresql_endpoint}
-                                {isPostgresURLCopied ? (
+                                {/* {isPostgresURLCopied ? (
                                   <span>
                                     <FontAwesomeIcon className="project-creation-event-spinner ml-2" size="xl" icon={faCheck} />
                                   </span>
@@ -417,7 +417,7 @@ const BackendDetails = (project: any, isBackendURLCopied: boolean, setIsBackendU
                                         <FontAwesomeIcon className="project-creation-event-spinner ml-2" size="xl" icon={faClipboard} />
                                     </span>
                                   </CopyToClipboard>
-                                )}
+                                )} */}
                               </div>
                             </div>
                           </div>

@@ -22,14 +22,14 @@ const login = async (username: string, password: string, loading: Function, navi
     password: password,
   };
   loading(true);
-  if (typeof username == typeof undefined || username.trim() == "") {
-    loading(false);
-    return;
-  }
-  if (typeof password == typeof undefined || password.trim() == "") {
-    loading(false);
-    return;
-  }
+  // if (typeof username == typeof undefined || username.trim() == "") {
+  //   loading(false);
+  //   return;
+  // }
+  // if (typeof password == typeof undefined || password.trim() == "") {
+  //   loading(false);
+  //   return;
+  // }
   const signupResp = await axios.post(`${AUTH_URL}/login`, {
     email: username,
     password: password,
