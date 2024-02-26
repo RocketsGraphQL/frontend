@@ -12,9 +12,11 @@ export default function DefaultLayout({
   const project_id = params.id;
   return (
     <>      
-      <main className="bg-scale-300">
+      <main className="h-screen bg-scale-300">
         <Sidebar pid={project_id} />
-        {children}
+        <div className="ml-20">
+          {children}
+        </div>
       </main>
     </>
   )
