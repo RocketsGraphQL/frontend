@@ -24,7 +24,6 @@ import { type ChatProps } from "./chat"
 export function MessageBox({ messages }: ChatProps ) {
     const [messages_, setMessages ] = React.useState<Message[]>([])
 
-    console.log("message list:", messages_)
     React.useEffect(() => {
         if (messages) {
             setMessages(messages);
@@ -40,7 +39,7 @@ export function MessageBox({ messages }: ChatProps ) {
                     {
                         messages_ && messages_.map((message) => {
                             return (
-                                <div className="grid grid-cols-12 p-2">
+                                <div className="grid grid-cols-12 p-2" key={message.id}>
                                     <div className={`${message.role == 'user' ? 'col-start-3' : ''} col-span-10`}>
                                         <motion.div>
                                             <div className={`${message.role == 'user' ?  'bg-black' : 'bg-accent text-black'} p-4 rounded-md whitespace-pre-wrap`}>

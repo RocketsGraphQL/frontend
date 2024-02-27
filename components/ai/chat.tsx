@@ -7,6 +7,8 @@ import { ChatInput } from "@/components/ai/chat-input"
 import { MessageBox } from "@/components/ai/message-box"
 import { Button } from "@/components/shadcn-ui/button"
 import { useEffect, useState } from 'react'
+import axios from 'axios'
+import Cookies from 'js-cookie'
 
 
 export interface ChatProps extends React.ComponentProps<'div'> {
@@ -21,7 +23,6 @@ const uniqueId = () => {
 }
 
 export function Chat({ id, initialMessages, className, chatId }: ChatProps) {
-    console.log("PID:", id);
 
     const [ currentMessage,  setCurrentMessage ] = useState('');
     const [messages, setMessages] = useState<Message[]>([]);
@@ -34,13 +35,29 @@ export function Chat({ id, initialMessages, className, chatId }: ChatProps) {
         }
     }, [])
 
-    console.log(initialMessages)
     const handleChange = (message: string) => {
         setCurrentMessage(message)
     }
 
+    const sendMessageToAIStudio = async (message: string, callback: Function) => {
+        const API_URL = `${process.env.NEXT_PUBLIC_AI_STUDIO_BASE_URL}/query`;
+        const jwt = Cookies.get("jwt");
+        const website_name = Cookies.get("website_name");
+        const response = await axios.post(
+          API_URL,
+          {
+            name: "rocketgraph",
+            query: message
+          }
+        );
+        console.log(response);
+        if (response.status === 200 && response.data) {
+          const { answer } = response.data;
+          callback(answer)
+        }
+    }
+
     const sendMessage = (message: string) => {
-        console.log("message", message)
         if (initialMessages) {
             const newMessage : Message = {
                 id: uniqueId(),
@@ -48,7 +65,18 @@ export function Chat({ id, initialMessages, className, chatId }: ChatProps) {
                 content: message
             };
             initialMessages.push(newMessage)
-            setMessages(initialMessages)
+            setMessages([...initialMessages])
+
+            // send message to AI API
+            sendMessageToAIStudio(message, (answer: any) => {
+                const newAIMessage : Message = {
+                    id: uniqueId(),
+                    role: 'system',
+                    content: answer
+                };
+                initialMessages.push(newAIMessage)
+                setMessages([...initialMessages])
+            })
         }
     }
     return (
@@ -62,13 +90,15 @@ export function Chat({ id, initialMessages, className, chatId }: ChatProps) {
                   </div> 
               </div>
               <div className="hidden lg:mt-0 lg:col-span-7 lg:flex ml-4">
-                    <div className='grid grid-rows-12 w-full gap-4 justify-normal'>
+                    <div className='grid w-full gap-2 justify-normal'>
                         {/* <ChatHeader /> */}
                         <MessageBox messages={messages} />
                         <div className='row-span-2'>
                             <ChatInput value={currentMessage} onChangeMessage={handleChange} />
                         </div>
-                        <Button onClick={(e) => {sendMessage(currentMessage); setCurrentMessage('')}} className='w-full'>Send message</Button>
+                        <div className='row-span-2'>
+                            <Button onClick={(e) => {currentMessage.trim() != '' && sendMessage(currentMessage); setCurrentMessage('')}} className='w-full text-red'>Send message</Button>
+                        </div>
                     </div>
               </div>                
           </div>
