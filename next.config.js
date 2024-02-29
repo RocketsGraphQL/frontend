@@ -13,6 +13,13 @@ const nextConfig = {
         },
       ],
     },
+    webpack: (config, { isServer }) => {
+      // eslint-disable-next-line space-before-blocks
+      if (isServer) {
+          config.externals = [nodeExternals()];
+      }
+      return config
+  }
 }
 
 module.exports = nextConfig

@@ -5,6 +5,7 @@ import { useChat, type Message } from 'ai/react'
 import { ChatHeader } from "@/components/ai/chat-header"
 import { ChatInput } from "@/components/ai/chat-input"
 import { MessageBox } from "@/components/ai/message-box"
+import { InputWithButton } from "@/components/ai/input-box"
 import { Button } from "@/components/shadcn-ui/button"
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -24,8 +25,10 @@ const uniqueId = () => {
 
 export function Chat({ id, initialMessages, className, chatId }: ChatProps) {
 
-    const [ currentMessage,  setCurrentMessage ] = useState('');
-    const [messages, setMessages] = useState<Message[]>([]);
+    const [ currentMessage, setCurrentMessage ] = useState('');
+    const [ messages, setMessages ] = useState<Message[]>([]);
+    const [ website, setWebsite ] = useState('');
+    const [ name, setName ] = useState('');
 
 
 
@@ -46,7 +49,7 @@ export function Chat({ id, initialMessages, className, chatId }: ChatProps) {
         const response = await axios.post(
           API_URL,
           {
-            name: "rocketgraph",
+            name: website_name,
             query: message
           }
         );
@@ -54,6 +57,30 @@ export function Chat({ id, initialMessages, className, chatId }: ChatProps) {
         if (response.status === 200 && response.data) {
           const { answer } = response.data;
           callback(answer)
+        }
+    }
+
+    const trainGPT = async () => {
+        const ACTIVATE_API_URL = `${process.env.NEXT_PUBLIC_AI_STUDIO_BASE_URL}/activate`;
+        Cookies.set("website_name", name);
+        const response = await axios.post(
+          ACTIVATE_API_URL,
+          {
+            name: name,
+          }
+        );
+        console.log(response);
+        if (response.status === 200 && response.data) {
+          const { answer } = response.data;
+          const TRAIN_API_URL = `${process.env.NEXT_PUBLIC_AI_STUDIO_BASE_URL}/insert`;
+          const resp = await axios.post(
+            TRAIN_API_URL,
+            {
+              name: name,
+              url: website
+            }
+          );
+          console.log("response: ", resp)
         }
     }
 
@@ -85,9 +112,10 @@ export function Chat({ id, initialMessages, className, chatId }: ChatProps) {
               <div className="mr-auto lg:col-span-5">
                   <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">AI Studio for Training machine learning models</h1>
                   <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">From Chatbots to Text to image, use Rocketgraph's AI studio to integrate machine learning tools easily into your tech stack.</p>
-                  <div className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                  {/* <div className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                       Coming Soon
-                  </div> 
+                  </div>  */}
+                  <InputWithButton onClick={trainGPT} onChangeURL={setWebsite} onChangeName={setName}/>
               </div>
               <div className="hidden lg:mt-0 lg:col-span-7 lg:flex ml-4">
                     <div className='grid w-full gap-2 justify-normal'>

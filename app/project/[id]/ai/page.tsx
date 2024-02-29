@@ -1,6 +1,6 @@
 export const metadata = {
-    title: 'Sign In - Mosaic',
-    description: 'Page description',
+    title: 'AI - Rocketgraph',
+    description: 'AI Studio',
 }
 
   import { type Message } from 'ai/react'

@@ -8,7 +8,7 @@ import FeatureIllustration from '@/public/rocketgraph_dashboard_15fps.gif'
 import HasuraIllustration from '@/public/hasura_dashboard_showcase_15fps.gif'
 
 
-import FeatureImage01 from '@/public/feature-01.png'
+import FeatureImage01 from '@/public/ai_first_look.gif'
 
 export default function Features01() {
 
