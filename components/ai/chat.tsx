@@ -12,7 +12,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import { EmbedCodeModal } from './embed-code-modal'
 
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 
 // Define mutation
 const ADD_WEBSITE = gql`
@@ -23,6 +23,17 @@ const ADD_WEBSITE = gql`
     }
   }
 `;
+
+const GET_WEBSITE = gql`
+    query MyQuery($instance_id: uuid!) {
+        ai_chatbots(where: {instance_id: {_eq: $instance_id}}) {
+            instance_id
+            website_name
+            website_url
+        }
+    }
+  
+`
 
 export interface ChatProps extends React.ComponentProps<'div'> {
     initialMessages?: Message[]
@@ -49,18 +60,19 @@ export function Chat({ id, initialMessages, className, chatId, instanceId }: Cha
     const [ embedCode, setEmbedCode ] = useState('');
 
     const [addWebsite, { data, loading, error }] = useMutation(ADD_WEBSITE);
+    const query_result = useQuery(GET_WEBSITE, {
+        variables: { instance_id: instanceId },
+    });
 
-
+    let website_name: any;
 
     useEffect(() => {
-        if (initialMessages) {
-            setMessages(initialMessages)
-        }
-        const website_name = Cookies.get('website_')
-        if (website_name) {
-            setWebsite(website_name);
+        if (query_result && query_result.data && query_result.data.ai_chatbots && query_result.data.ai_chatbots.length) {
+            console.log(query_result.data.ai_chatbots);
+            website_name = query_result.data.ai_chatbots[0].website_name;
+            setWebsite(website_name)
             setIsTrained(true);
-            console.log(website_name)
+
             setEmbedCode(`
     <div id="iframe-container">
         <iframe src='http://localhost:3002?id=${website_name}' id="rocketgraph-chatbot-widget" style='position: fixed; right: 1rem; z-index: 9999999; border: none; width: 448px; bottom: 5rem; height: 85vh; border-radius: 0.75rem; box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.1) 0px 8px 10px -6px; display: block;' frameBorder='0' width='100%' height='500px' allowFullScreen ></iframe> 
@@ -86,6 +98,12 @@ export function Chat({ id, initialMessages, className, chatId, instanceId }: Cha
     </script>
             `)
         }
+    }, [query_result])
+
+    useEffect(() => {
+        if (initialMessages) {
+            setMessages(initialMessages)
+        }
     }, [])
 
     const handleChange = (message: string) => {
@@ -99,7 +117,7 @@ export function Chat({ id, initialMessages, className, chatId, instanceId }: Cha
         const response = await axios.post(
           API_URL,
           {
-            name: website_name,
+            name: "rocketgraph",
             query: message
           }
         );

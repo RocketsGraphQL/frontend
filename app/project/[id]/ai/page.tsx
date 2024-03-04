@@ -22,20 +22,19 @@ const messages: Message[] = [
 import { Chat } from '@/components/ai/chat'
 import { RApolloProvider } from '@/experimental/rapollo'
   
-  export interface ChatPageProps {
-    params: {
-      id: string
-    }
+export interface ChatPageProps {
+  params: {
+    id: string
   }
+}
   
-  export default async function ChatPage({ params }: ChatPageProps) {
-  
-
-    return (
-      <RApolloProvider auth={auth} gqlEndpoint="https://hasura-endpoint.rocketgraph.io/v1/graphql">
-        <Chat id={"12345"} initialMessages={messages} instanceId={params.id} />
-      </RApolloProvider>
-    )
-  }
+export default function ChatPage({ params }: ChatPageProps) {
+  console.log("Chat page instacne: ", params.id)
+  return (
+    <RApolloProvider auth={auth} gqlEndpoint="https://hasura-endpoint.rocketgraph.io/v1/graphql">
+      <Chat id={"12345"} initialMessages={messages} instanceId={params.id} />
+    </RApolloProvider>
+  )
+}
 
   
