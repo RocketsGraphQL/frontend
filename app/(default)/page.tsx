@@ -14,6 +14,8 @@ import Pricing from '@/components/pricing'
 import Testimonials from '@/components/testimonials'
 import Cta from '@/components/cta'
 import Cookie from "@/components/ui/cookie"
+import Chatbot from "@/components/chatbot"
+import Tracking from '@/components/tracking'
 
 export default function Home() {
   return (
@@ -27,7 +29,9 @@ export default function Home() {
       {/* <Features04 /> */}
       <Pricing />
       {/* <Testimonials /> */}
+      <Chatbot />
       <Cookie />
+      <Tracking />
       <Cta />
     </>
   )

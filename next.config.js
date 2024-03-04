@@ -12,14 +12,7 @@ const nextConfig = {
           hostname: 'production-customer-site-public.s3.us-east-2.amazonaws.com',
         },
       ],
-    },
-    webpack: (config, { isServer }) => {
-      // eslint-disable-next-line space-before-blocks
-      if (isServer) {
-          config.externals = [nodeExternals()];
-      }
-      return config
-  }
+    }
 }
 
 module.exports = nextConfig

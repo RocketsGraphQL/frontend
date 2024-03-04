@@ -374,3 +374,7 @@ h3{
 .feature-showcase-purple {
 	color: #7149c6;
 }
+
+/* .chatbot-styling {
+	position: fixed; right: 1rem; z-index: 9999999; border: none; width: 448px; bottom: 5rem; height: 85vh; border-radius: 0.75rem; box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.1) 0px 8px 10px -6px; display: block;
+} */

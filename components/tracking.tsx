@@ -9,35 +9,18 @@ const trackingCodes = () => {
         <>
             <Script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js" />
             <link rel="stylesheet" href="https://unpkg.com/transition-style" />
+            {/* <link rel="stylesheet" href="http://localhost:3000/_next/static/css/app/layout.css?v=1709306268180" /> */}
 
             <meta name="referrer" content="no-referrer-when-downgrade" />
             {/* Google Tag Manager - Global base code */}
             {
-            !inDevEnvironment ?
+            inDevEnvironment ?
             <>
                 <Script
                 id="gtag-base"
                 strategy="afterInteractive"
                 dangerouslySetInnerHTML={{
                     __html: `
-                    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                    })(window,document,'script','dataLayer', '${GTM_ID}');
-                    `,
-                }}
-                />
-                <Script async src="https://www.googletagmanager.com/gtag/js?id=UA-218110255-1" />
-                <Script
-                id="gtag-base-campaign-paid"
-                strategy="afterInteractive"
-                dangerouslySetInnerHTML={{
-                    __html: `
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', 'UA-218110255-1');
                     `,
                 }}
                 />
