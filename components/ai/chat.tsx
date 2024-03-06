@@ -111,21 +111,26 @@ export function Chat({ id, initialMessages, className, chatId, instanceId }: Cha
     }
 
     const sendMessageToAIStudio = async (message: string, callback: Function) => {
-        const API_URL = `${process.env.NEXT_PUBLIC_AI_STUDIO_BASE_URL}/query`;
-        const jwt = Cookies.get("jwt");
-        const website_name = Cookies.get("website_name");
-        const response = await axios.post(
-          API_URL,
-          {
-            name: "rocketgraph",
-            query: message
-          }
-        );
-        console.log(response);
-        if (response.status === 200 && response.data) {
-          const { answer } = response.data;
-          callback(answer)
+        if (website) {
+            const API_URL = `${process.env.NEXT_PUBLIC_AI_STUDIO_BASE_URL}/query`;
+            const jwt = Cookies.get("jwt");
+            const website_name = Cookies.get("website_name");
+            const response = await axios.post(
+              API_URL,
+              {
+                name: website,
+                query: message
+              }
+            );
+            console.log(response);
+            if (response.status === 200 && response.data) {
+              const { answer } = response.data;
+              callback(answer)
+            }
+        } else {
+            console.log("Error: No website trained")
         }
+
     }
 
     const trainGPT = async () => {
