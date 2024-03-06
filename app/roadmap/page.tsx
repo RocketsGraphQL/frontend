@@ -1,5 +1,5 @@
 export const metadata = {
-    title: 'Roadmap - Mosaic',
+    title: 'Roadmap - Rocketgraph',
     description: 'Page description',
   }
   

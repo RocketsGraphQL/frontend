@@ -12,7 +12,7 @@ const nextConfig = {
           hostname: 'production-customer-site-public.s3.us-east-2.amazonaws.com',
         },
       ],
-    },
+    }
 }
 
 module.exports = nextConfig
