@@ -155,7 +155,7 @@ export default function Hero() {
             </div> */}
 
             <p className="text-lg text-slate-300 mb-8" data-aos="fade-down" data-aos-delay="200">Supercharge your web applications with Authentication, Database, GraphQL and serverless functions right from day zero.</p>
-            <div className="max-w-xs mx-auto sm:max-w-none sm:inline-flex sm:justify-center space-y-4 sm:space-y-0 sm:space-x-4" data-aos="fade-down" data-aos-delay="400">
+            <div className="max-w-xs mx-auto sm:max-w-none sm:inline-flex sm:justify-center space-y-4 sm:space-y-0 sm:space-x-4 cta_bottom_info" data-aos="fade-down" data-aos-delay="400">
               <div>
                 <a className="btn text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href="/signup">
                   Get Started 
@@ -172,6 +172,9 @@ export default function Hero() {
                   <span>Read the docs</span>
                 </a>
               </div>
+            </div>
+            <div className='powered-by rounded-sm justify-center pt-8'>
+              <p>Backed by </p><img src="./nvidia_in_white.png"/>
             </div>
           </div>
 

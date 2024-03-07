@@ -29,7 +29,7 @@ export default function Features01() {
       <div className="py-12 md:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="max-w-3xl mx-auto text-center pb-12">
-            <h2 className="font-inter-tight text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 mb-4">An ecosystem of technologies to pulg in</h2>
+            <h2 className="font-inter-tight text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 mb-4">An ecosystem of technologies to plug in</h2>
             <p className="text-lg text-slate-300">Spin up a chatbot trained on your own data by just entering your documentation URL.</p>
           </div>
           <div>
