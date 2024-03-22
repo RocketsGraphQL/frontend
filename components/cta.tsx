@@ -23,10 +23,10 @@ export default function Cta() {
           {/* Content */}
           <div className="max-w-3xl mx-auto text-center">
             <div>
-              <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">The security first platform</div>
+              <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-purple-200 pb-3">Enterprise AI Chatbots</div>
             </div>
-            <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Take control of your business</h2>
-            <p className="text-lg text-slate-400 mb-8">Build production grade web applications in minutes. Turn your idea into an MVP in just a few days.</p>
+            <h2 className="h2 bg-clip-text text-transparent bg-gradient-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">Trained on your custom data</h2>
+            <p className="text-lg text-slate-400 mb-8">Never let your visitors leave your site doubtful. Retain them with our AI chatbots that respond just like a human does.</p>
             <div>
               <a className="btn text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white transition duration-150 ease-in-out group" href="/signup">
                 Get Started 

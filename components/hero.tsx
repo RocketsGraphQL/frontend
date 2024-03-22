@@ -154,7 +154,7 @@ export default function Hero() {
               </h1>
             </div> */}
 
-            <p className="text-lg text-slate-300 mb-8" data-aos="fade-down" data-aos-delay="200">Supercharge your web applications with Authentication, Database, GraphQL and serverless functions right from day zero.</p>
+            <p className="text-lg text-slate-300 mb-8" data-aos="fade-down" data-aos-delay="200">Supercharge your web applications with AI Chatbots, Authentication, Database, GraphQL and serverless functions right from day zero.</p>
             <div className="max-w-xs mx-auto sm:max-w-none sm:inline-flex sm:justify-center space-y-4 sm:space-y-0 sm:space-x-4 cta_bottom_info" data-aos="fade-down" data-aos-delay="400">
               <div>
                 <a className="btn text-slate-900 bg-gradient-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group" href="/signup">
